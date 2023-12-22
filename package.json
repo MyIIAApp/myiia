@@ -1,5 +1,5 @@
 {
-  "homepage": "https://myiiaapp.github.io/myiia/"
+  "homepage": "https://myiiaapp.github.io/myiia/",
   "name": "myiia",
   "version": "0.0.1",
   "private": true,
@@ -30,6 +30,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
+    "gh-pages": "^6.1.0",
     "ionicons": "^5.4.0",
     "moment": "^2.29.1",
     "onesignal-cordova-plugin": "^3.0.1",
@@ -68,7 +69,8 @@
     "build-android": "ionic capacitor build android",
     "build-ios": "env-cmd -f ./env/.env.ios ionic capacitor build ios",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "env-cmd -f ./env/.env.admin.local react-scripts start"
   },
   "eslintConfig": {
     "extends": [
