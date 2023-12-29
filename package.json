@@ -71,6 +71,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start": "env-cmd -f ./env/.env.admin.local react-scripts start",
+    "build": "react-scripts build",
     "predeploy": "react-scripts build",
     "deploy": "gh-pages -d build"
   },
