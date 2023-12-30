@@ -70,7 +70,7 @@
     "build-ios": "env-cmd -f ./env/.env.ios ionic capacitor build ios",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "env-cmd -f ./env/.env.admin.local react-scripts start",
+    "start": "env-cmd -f ./env/.env.user.prod react-scripts start",
     "build": "react-scripts build",
     "predeploy": "react-scripts build",
     "deploy": "gh-pages -d build"
