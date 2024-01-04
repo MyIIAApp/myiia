@@ -1,3 +1,4 @@
+
 export enum MagazineView {
     MagazineHome = "MagazineHome",
     CurrentMagazine = "CurrentMagazine",
