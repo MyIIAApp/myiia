@@ -24,6 +24,7 @@ jobs:
       - name: npm install package
         run: |
           npm install -f
+          npm run build
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
