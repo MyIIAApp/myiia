@@ -2,7 +2,6 @@
   "name": "myiia",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://myiiaapp.github.io/myiia/",
   "dependencies": {
     "@capacitor/android": "^3.5.1",
     "@capacitor/app": "1.0.2",
