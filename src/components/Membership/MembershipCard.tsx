@@ -142,7 +142,7 @@ class MembershipCard extends React.Component<MembershipCardProps> {
                   </IonCardSubtitle>
                 </IonSegment>
               </IonCol>
-              <IonCol>
+{/*               <IonCol>
                 <IonSegment mode ="md">
                   <IonCardTitle  class="membershipCardTitle">
                     {this.props.membershipModel.membershipExpiryDate}
@@ -153,7 +153,7 @@ class MembershipCard extends React.Component<MembershipCardProps> {
                     <strong>Renewal Due Date</strong>
                   </IonCardSubtitle>
                 </IonSegment>
-              </IonCol>
+              </IonCol> */}
             </IonRow>
           </IonGrid>
         </IonCardContent>
