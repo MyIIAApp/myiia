@@ -1,0 +1,100 @@
+{
+  "name": "myiia",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^3.5.1",
+    "@capacitor/app": "1.0.2",
+    "@capacitor/browser": "^1.0.7",
+    "@capacitor/core": "3.1.1",
+    "@capacitor/filesystem": "^1.0.3",
+    "@capacitor/haptics": "1.0.2",
+    "@capacitor/ios": "3.1.1",
+    "@capacitor/keyboard": "1.0.2",
+    "@capacitor/network": "^1.0.5",
+    "@capacitor/status-bar": "1.0.2",
+    "@ionic-native/file-chooser": "^5.36.0",
+    "@ionic-native/file-transfer": "^5.36.0",
+    "@ionic/cli": "^6.19.1",
+    "@ionic/react": "^5.5.0",
+    "@ionic/react-router": "^5.5.0",
+    "@ionic/storage": "^3.0.6",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.19.15",
+    "@types/react": "^16.14.3",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
+    "axios": "^0.21.1",
+    "ionicons": "^5.4.0",
+    "moment": "^2.29.1",
+    "onesignal-cordova-plugin": "^3.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-file-picker": "0.0.6",
+    "react-ga": "^3.3.0",
+    "react-phone-number-input": "^3.1.25",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.1.3",
+    "use-file-picker": "^1.3.0",
+    "web-vitals": "^0.2.4",
+    "gh-pages": "^3.2.3",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4",
+    "write-excel-file": "^1.4.4"
+  },
+  "scripts": {
+    "start-admin-local": "env-cmd -f ./env/.env.admin.local react-scripts start",
+    "start-user-local": "env-cmd -f ./env/.env.user.local react-scripts start",
+    "start-user-prod": "env-cmd -f ./env/.env.user.prod react-scripts start",
+    "start-user-android": "env-cmd -f ./env/.env.android react-scripts start",
+    "build-admin-prod": "env-cmd -f ./env/.env.admin.prod react-scripts build",
+    "build-user-prod": "env-cmd -f ./env/.env.user.prod react-scripts build",
+    "build-android": "ionic capacitor build android",
+    "build-ios": "env-cmd -f ./env/.env.ios ionic capacitor build ios",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start": "env-cmd -f ./env/.env.user.prod react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "react-scripts build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@capacitor/cli": "3.1.1",
+    "env-cmd": "^10.1.0"
+  },
+  "description": "An Ionic project"
+}

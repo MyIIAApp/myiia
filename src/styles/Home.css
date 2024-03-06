@@ -1,0 +1,431 @@
+@import url("Common.css");
+
+.welcomeSeg {
+  margin-top: 5%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  text-shadow: 0px 0.75px, 0.75px 0px, 0.75px 0.75px;
+  font-size: 29px;
+}
+
+.msmeSeg {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16.2px;
+  margin-top: 1%;
+}
+
+.hosegment {
+  margin-top: 2%;
+}
+
+.hoIonCard {
+  margin: 1.5%;
+}
+
+.hoCardseg {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #cb202d;
+  text-shadow: 0px 0.25px, 0.25px 0px, 0.25px 0.25px;
+}
+
+.hoGuest {
+  margin-top: 6%;
+  width: 40%;
+}
+
+.homembers {
+  margin-top: 3%;
+  width: 60%;
+}
+
+.thanksmsg {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  text-align: center;
+  text-shadow: 0px 0.4px, 0.4px 0px, 0.4px 0.4px;
+  color: #000000;
+}
+
+.thanksmsgGuest {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+}
+
+.segMargin {
+  margin-top: 3%;
+}
+
+.hoButton {
+  --background: #cb202d;
+  --border-radius: 10px;
+  width: 88.1%;
+  height: 6.7vh;
+}
+
+.hobttntxt {
+  text-transform: none;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.segHoTest {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  color: #000000;
+  justify-content: flex-start;
+  margin-left: 6.8%;
+  margin-top: 4%;
+  text-shadow: 0px 0.25px, 0.25px 0px, 0.25px 0.25px;
+}
+
+.hoSliderCard {
+  background: #ffffff;
+  box-shadow: 4px 4px 10px rgb(0 0 0 /10%);
+  border-radius: 10px;
+  margin-left: 6.8%;
+  margin-right: 6.8%;
+  height: 15vh;
+  min-height: 120px;
+  width: 100%;
+  margin-bottom: 9%;
+}
+.hoSliders .swiper-pagination-bullet {
+  opacity: 1;
+  border: #cb202d solid 1px;
+  background-color: transparent;
+  width: 6px;
+  height: 6px;
+}
+
+.hoSliders .swiper-pagination-bullet-active {
+  background: #cb202d;
+  width: 7.5px;
+  height: 7.5px;
+}
+
+.hoSliders .swiper-pagination {
+  padding-top: 30%;
+}
+
+.hoSliders {
+  height: 18vh;
+  min-height: 150px;
+}
+
+.hoTmRow {
+  justify-content: end;
+}
+
+.hoTComment {
+  font-family: Montserrat;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+  color: #000000;
+}
+
+.hoTCompany {
+  justify-content: end;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  color: #000000;
+}
+
+.hothnksmsg {
+  font-weight: bold;
+  text-shadow: 0px 0.25px, 0.25px 0px, 0.25px 0.25px;
+}
+
+.iiaElection {
+  --box-shadow: none;
+  --color: #000000;
+  --background: transparent;
+  font-size: 21px;
+  font-weight: 600;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+/* @media (max-height: 730px) {
+  .welcomeSeg {
+    margin-top: 5%;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    text-shadow: 0px 0.75px, 0.75px 0px, 0.75px 0.75px;
+    font-size: 25px;
+  }
+
+  .msmeSeg {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 1%;
+  }
+
+  .thanksmsg {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 0px 0.4px, 0.4px 0px, 0.4px 0.4px;
+    color: #000000;
+  }
+
+  .thanksmsgGuest {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+  }
+  .hobttntxt {
+    text-transform: none;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  .segHoTest {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    justify-content: flex-start;
+    margin-left: 6.8%;
+    margin-top: 4%;
+    text-shadow: 0px 0.25px, 0.25px 0px, 0.25px 0.25px;
+  }
+  .hoTComment {
+    font-family: Montserrat;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    font-size: 12px;
+  }
+
+  .hoTCompany {
+    justify-content: end;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+  }
+} */
+
+/* @media (min-width: 730px) {
+  .hoSliderCard {
+    background: #ffffff;
+    box-shadow: 4px 4px 20px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    margin-left: 6.8%;
+    margin-right: 6.8%;
+    height: 12vh;
+    width: 100%;
+    margin-bottom: 2%;
+  }
+  .hoIonCard {
+    margin: 1.5%;
+  }
+}
+
+@media (min-width: 520px) and (max-width: 729px) {
+  .hoSliderCard {
+    background: #ffffff;
+    box-shadow: 4px 4px 20px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    margin-left: 6.8%;
+    margin-right: 6.8%;
+    height: 14vh;
+    width: 100%;
+    margin-bottom: 6%;
+  }
+  .hoIonCard {
+    margin: 1.5%;
+  }
+}
+*/
+.memberCount {
+  margin-top: 30px;
+  color: red;
+  font-family: Montserrat;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 88px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.memberCountContent {
+  margin-top: 0px;
+  color: red;
+  font-family: Montserrat;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 88px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.memberCard {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 30px;
+  box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+.memberCard2 {
+  box-shadow: none !important;
+  margin-top: 30px;
+}
+.memberlist {
+  color: red;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+.memberCounttext {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.memberCardTitle {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.memberCounthead {
+  color: black;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding: top 11px;
+  padding-bottom: 14px;
+}
+.memberContent {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.membervalue {
+  color: red;
+  font-size: 16px;
+  font-weight: 500;
+}
+.bullet {
+  padding-right: 10px;
+}
+.chapterLevel {
+  color: red;
+  font-family: Montserrat;
+  font-weight: 600;
+}
+
+.eventPop{
+  --width:90vw;
+}
+.eventPopButton{
+  width: 98%;
+display: block;
+margin: auto;
+margin-top: 7px;
+margin-bottom: 7px;
+}
+.tableRow{
+  border-top-color: #000000;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+.tableFirstCol{
+  border-left-color: #000000;
+  border-left-width: 1px;
+  border-left-style: solid;
+}
+.tableAllCol{
+  border-right-color: #000000;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+.tableLastRow{
+  border-bottom-color: #000000;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+.headers{
+  font-weight: bold;
+}
+.tableClass{
+  margin-top: 20px;
+  min-width: 1000px;
+/* flex-wrap: nowrap; */
+overflow-x: scroll!important;
+overflow-y: hidden;
+}
+.newRatetables{
+  color: #000000;
+  padding: 0;
+  margin-bottom: 3px;
+}
+
+.newRatetables ion-col{
+  padding: 0;
+}
+.newRatetables ion-col:not(:last-child){
+  border-right:1px solid grey;
+}
+.newRatetables ion-row:first-child{
+  border-top:1px solid grey;
+}
+.newRatetables ion-row{
+  border-bottom: 1px solid grey;
+}
+.newRatetables ion-col:first-child{
+  border-left: 1px solid grey;
+}
+.newRatetables ion-col:last-child{
+  border-right: 1px solid grey;
+}
+.newpricemodal{
+  --max-height: 40% !important;
+}
+.closeIcon{
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: end;
+  color: red;
+}

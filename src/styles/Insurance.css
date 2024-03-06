@@ -1,0 +1,169 @@
+.insuranceCard{
+    position: relative;
+width: 100%;
+height: 204px;
+margin-top:7%;
+background: rgba(203, 32, 45, 0.1);
+box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+align-self: center;
+}
+.insuranceLogo{
+    position: relative;
+    margin-right: 20%;
+    background: #FFFFFF;
+border: 0.216px solid #383336;
+}
+.insuranceTitle{
+    position: relative;
+top: 20px;
+
+font-family: Montserrat;
+font-style: normal;
+font-weight: bolder;
+font-size: 20px;
+line-height: 24px;
+
+color: #000000;
+}
+.policyNumber{
+    font-family: Montserrat;
+font-style: bold;
+font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+color: #000000;
+}
+.policyExpiry{
+    font-family: Montserrat;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 15px;
+color: rgba(0, 0, 0, 0.6);
+}
+.cardFooter{
+    position:absolute;
+    width: 100%;
+height: 60px;
+right: 0.1px;
+    background: #CB202D;
+border-radius: 0px 0px 10px 10px;
+}
+.sumInsuredValue{
+    position: absolute;
+    margin-top: 8px;
+    left: 26px;
+    font-family: Montserrat;
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 29px;
+color: #FFFFFF;
+}
+.sumInsured{
+    position: absolute;
+    top: 16px;
+    right: 5%;
+    font-family: Montserrat;
+font-style: normal;
+font-weight: 300;
+font-size: 12px;
+line-height: 15px;
+color: #FFFFFF;
+}
+.textClass1{
+    position: relative;
+    top: 7%;
+    bottom: 7%;
+    left: 2%;
+    font-family: Montserrat;
+font-style: normal;
+font-weight: 500;
+font-size: 22px;
+line-height: 27px;
+color: #000000;
+}
+.dependentCard{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background: #FFFFFF;
+box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+}
+.dependentName{
+    position: relative;
+    left: 5%;
+    top: 15%;
+    font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 29px;
+
+color: #CB202D;
+}
+.dependentDOB{
+    position: relative;
+    left: 5%;
+    top: 15%;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+}
+.dependentRelation{
+    position: relative;
+    left: 5%;
+    top: 20%;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+}
+.bold{
+    font-weight: bold;
+    font-family: Montserrat;
+}
+.createpop2 {
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 18px;
+    line-height: 26px;
+    top: 17px;
+    margin-bottom: 12px;
+  }
+  
+  .createpop3 {
+    height: 38px;
+    margin-top: 17px;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+    --border-radius: 7px;
+  }
+  .errorImage{
+      margin-top: 20px;
+  }
+  .downloadbutton{
+    --border-radius: 100%;
+    height: 50px;
+  }
+  .downloadIcon{
+      width: 40px;
+      height: 35px;
+      background-color: #CB202D;
+      border-radius: 100%;
+  }
+  .insuButton {
+    --background: #cb202d;
+    --border-radius: 10px;
+    width: 68.1%;
+    height:  7.7vh;
+    align-items: center;
+    text-wrap: pretty;
+    font-size: 12px;
+  }

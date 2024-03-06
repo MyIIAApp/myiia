@@ -1,0 +1,77 @@
+.container {
+  text-align: center;
+  margin-top: 25vh;
+}
+
+.container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+.container a {
+  text-decoration: none;
+}
+
+.basicButton {
+  --border-color: #cb202d;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-radius: 10px;
+  /* box-shadow: 4px 4px 20px rgb(0 0 0 / 10%); */
+  /* filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.1)); */
+}
+.basicInput {
+  --background: #f3f3f3;
+  --border-radius: 12px;
+  width: 90%;
+}
+.basicInputGSt{
+  --background: #f3f3f3;
+  --border-radius: 12px;
+  width: 100%;
+    max-width: 324px;
+}
+/* .basicScrollableContent {
+  --padding-bottom: 70px;
+} */
+.whiteBackground {
+  --background: white;
+  background-color: white;
+}
+.comingsoon {
+  color: #cb202d;
+  font-weight: bolder;
+  font-size: 29px;
+  line-height: 40px;
+  text-align: center;
+}
+.comingsoon1 {
+  color: #cb202d;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+}
+.limitContent {
+  max-width: 600px;
+  margin: auto;
+}
+
+ion-app{ 
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+  margin-left: constant(safe-area-inset-left);
+  margin-left: env(safe-area-inset-left);
+  margin-right: constant(safe-area-inset-right);
+  margin-right: env(safe-area-inset-right);
+}

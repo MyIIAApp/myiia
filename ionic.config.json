@@ -1,0 +1,7 @@
+{
+  "name": "myiia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
