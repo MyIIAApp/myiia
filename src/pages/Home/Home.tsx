@@ -235,7 +235,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
                       <IonGrid>
                         <IonRow>
                           <p className="hoTComment" style={{textAlign: "justify",fontWeight:"bold",fontStyle:"unset"}}>
-                          1-Revised Membership fee will applicable w.e.f. 01/04/2024
+                          1- Revised Membership fee will be applicable w.e.f. 01/04/2024
                           <strong style={{color:"#1b6dff"}} onClick={(e) => { this.setState({ showPriceTable: !this.state.showPriceTable }) }}> click here</strong> for details.</p>
                           {/* {
                             this.state.showPriceTable ? (
