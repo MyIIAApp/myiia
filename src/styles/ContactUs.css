@@ -1,0 +1,51 @@
+@import url("Common.css");
+
+.msmeSeg {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16.2px;
+  margin-top: 1%;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.icon {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.img {
+  width: 50%;
+  margin: 10px;
+}
+.mapContent {
+  color: black;
+  font-weight: 600;
+}
+.foot {
+  margin-top: 10vh;
+  align-items: center;
+  font-weight: 1000;
+}
+
+.feedbackBttn {
+  width: 95%;
+  height: 40px;
+  text-transform: capitalize;
+  box-shadow: none;
+  --border-radius: 10px;
+}
+
+.submitFeedback {
+  text-transform: none;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+}
+.legalContent {
+  font-size: 10px;
+  text-decoration: underline;
+  font-weight: 1000;
+}

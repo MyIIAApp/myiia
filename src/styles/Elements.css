@@ -1,0 +1,103 @@
+@import url("Common.css");
+.toolbar-container {
+  height: 150%;
+}
+.text {
+  position: absolute;
+  left: 43.72%;
+  right: 43.24%;
+  top: 50.89%;
+  bottom: 15.77%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 32px;
+  color: #ffffff;
+}
+
+.rect {
+  height: 60px;
+  --background: #cb202d;
+  background: #cb202d;
+  border-radius: 0px 0px 30px 30px;
+  box-shadow: 0px 8px rgba(203, 32, 45, 0.29);
+  padding-top: 0px!important;
+}
+ion-toolbar .toolbar-background{
+border-radius: 30px;
+}
+.button-inner {
+  margin-top: 15%;
+  color: white;
+}
+.backButton {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.toolbar-props {
+  height: 115%;
+}
+.fileUploadButton {
+  height: 55px;
+  --color: #cb202d;
+  --border-style: dashed;
+  --background: white;
+}
+.removeButton {
+  height: 27px;
+}
+.promotebutton {
+  margin-top: 20px;
+  height: 42px;
+  --box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+  --border-radius: 10px;
+  margin-left: 25px;
+  margin-right: 27px;
+  width: -webkit-fill-available;
+}
+.offercard {
+  border: 1px solid #cb202d;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 130px;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 15px;
+  line-height: 17px;
+  text-align: center;
+  color: #cb202d;
+  margin: auto;
+}
+.offercat {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.offercatphoto {
+  margin: 16px;
+}
+.offercattext {
+  margin-left: 5px;
+  margin-right: 8px;
+}
+.offercardother {
+  border: 1px solid #cb202d;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 44px;
+  width: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  width: -webkit-fill-available;
+}
+.offercardothertext {
+  margin-top: 12px;
+}
+.uploadLoading{
+  height:50px;
+}

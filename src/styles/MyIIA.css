@@ -1,0 +1,125 @@
+@import url("Common.css");
+
+.myiiaImgseg {
+  margin-top: 15px;
+}
+.myiiaImage {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 205px;
+  width: 100%;
+  object-fit: cover !important;
+}
+
+.myiiatab {
+  margin-top: 260px;
+  min-height: 300px;
+}
+.myiiatabbar {
+  justify-content: space-evenly;
+}
+.IIACard{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.myiiabttn {
+  flex-flow: unset;
+  justify-content: unset;
+  height: 100%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+}
+.myiiatab .tab-selected {
+  border-bottom: 2px solid #cb202d;
+}
+
+.myiiaSlider .swiper-pagination-bullet {
+  opacity: 1;
+  border: #cb202d solid 1px;
+  background-color: transparent;
+  width: 6px;
+  height: 6px;
+}
+
+.myiiaSlider .swiper-pagination-bullet-active {
+  background: #cb202d;
+  width: 7.5px;
+  height: 7.5px;
+}
+
+.myiialeaderavtr {
+  width: 135%;
+  height: 100%;
+  max-width: 75px;
+  max-height: 75px;
+  min-width: 55px;
+  min-height: 55px;
+}
+
+.leaderName {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  text-shadow: 0px 1px, 1px 0px, 1px 1px;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.leaderDesg {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 12px;
+  line-height: 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: black;
+}
+
+.chapterName {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 12px;
+  line-height: 15px;
+  color: black;
+}
+
+.leaderbttn {
+  width: 34px;
+  height: 34px;
+  --border-radius: 34px;
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+  padding-top: 0% !important;
+  padding-bottom: 0% !important;
+}
+.icons {
+  width: 15px !important;
+  max-width: 15px;
+  color: white;
+}
+.myiiacolimg {
+  align-self: center;
+  text-align: -webkit-center;
+}
+
+.myiiacol {
+  align-self: center;
+}
+
+.button-native {
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+  padding-top: 0% !important;
+  padding-bottom: 0% !important;
+}
+
+.myiiacoldeails {
+  padding-left: 7%;
+}
