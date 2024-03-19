@@ -395,9 +395,6 @@ public static async paymentAllInvoices(loginMetadata: LoginMetadata,forceRefresh
  
 
   public static async BeforeInvoiceSave(props){
- 
-    PaymentService.roundFloatCalc(props.igst) > 0
-
     let cgst =  (PaymentService.roundFloatCalc(props.dashboardobj.cgst) > 0) ? PaymentService.roundFloatCalc(((parseFloat(props.subTotal) * 9) /100).toString()) : 0;
     let igst =  (PaymentService.roundFloatCalc(props.dashboardobj.igst) > 0) ? PaymentService.roundFloatCalc(((parseFloat(props.subTotal) *18) / 100).toString()) : 0;
     let sgst =  (PaymentService.roundFloatCalc(props.dashboardobj.sgst) > 0) ? PaymentService.roundFloatCalc(((parseFloat(props.subTotal) * 9) / 100).toString()) : 0;
@@ -606,11 +603,6 @@ public static async paymentAllInvoices(loginMetadata: LoginMetadata,forceRefresh
     };
 
     console.log(data);
-    //https://iiaonline.in
-    // https://iiaonline.in/e_invoicing_iia.php 
-    // const newdata = {
-    //   invoice1:'SFMUMINV2300866'
-    // }
     const response = await fetch(`https://iiaonline.in/e_invoicing_iia.php`, {
 	    method: "POST", 
 	    body: JSON.stringify(data),
