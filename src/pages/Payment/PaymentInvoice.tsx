@@ -7,7 +7,7 @@ import Loading from "../../components/Loading";
 import { invoice } from "../../models/invoice";
 import { paymentDetails } from "../../models/paymentDetails";
 import { MembershipProfileModel } from "../../models/Membership/MembershipProfileModel";
-
+import { saveAs } from 'file-saver';
 interface PaymentStates {
   showAlert: boolean;
   alertMessage: string;
@@ -62,11 +62,14 @@ class PaymentInvoice extends React.Component<
         console.log(e);
       });
   }
-  
+
   componentDidMount() {
     PaymentService.BeforeInvoiceSave(this.props).then(res=>{
       let data = (JSON.parse(res.response));
-      let invoiceId = res.invoiceId;          
+      let invoiceId = res.invoiceId;
+      let newblobdata = (res.pdfresponse) ? res.pdfresponse.blob() :""; 
+      let buyerGST = this.props.userdetails.gstin;         
+      let buyerName = this.props.userdetails.unitName; 
          if(data.status_cd==1){
           PaymentService.GetInvoiceService(
            this.props.loginMetadata,
@@ -84,6 +87,9 @@ class PaymentInvoice extends React.Component<
          .then((response: invoice) => {
             if(response.paymentSuccess){
               PaymentService.updateInvoiceId(this.props.userId,invoiceId).then(res=>{
+                if(buyerGST && buyerGST.substring(1, 5)!="0000"){
+                  saveAs(newblobdata,`${buyerName}.pdf`);
+                }
                 this.regenrateOrDeleteFake(invoiceId);
               })
             }
@@ -102,7 +108,8 @@ class PaymentInvoice extends React.Component<
   }
 
   render() {
-    if (this.state.showloading) {
+    // this.state.showloading
+    if (false) {
       return (
         <Loading />
       );
@@ -135,9 +142,11 @@ class PaymentInvoice extends React.Component<
             Payment Successful
           </IonSegment>
           <IonSegment mode ="md">
+          
           <IonRouterLink href={this.state.newURLpdf}>
             Download Invoice
           </IonRouterLink>
+
             </IonSegment>
         </IonGrid>
       );
@@ -145,5 +154,4 @@ class PaymentInvoice extends React.Component<
     }
   }
 }
-
 export default PaymentInvoice;
