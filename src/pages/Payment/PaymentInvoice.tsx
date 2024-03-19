@@ -108,8 +108,7 @@ class PaymentInvoice extends React.Component<
   }
 
   render() {
-    // this.state.showloading
-    if (false) {
+    if (this.state.showloading) {
       return (
         <Loading />
       );
@@ -154,4 +153,5 @@ class PaymentInvoice extends React.Component<
     }
   }
 }
+
 export default PaymentInvoice;
