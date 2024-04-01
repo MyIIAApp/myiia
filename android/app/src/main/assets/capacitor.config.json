@@ -1,0 +1,6 @@
+{
+	"appId": "fleckstech.myiia",
+	"appName": "myiia",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

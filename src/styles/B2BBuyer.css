@@ -1,0 +1,298 @@
+@import url("Common.css");
+.itemImage {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.itemImage2 {
+  width: 100%;
+  object-fit: contain;
+  height: 40vh;
+  min-height: 100px;
+  margin-top: 8px;
+  border-radius: 20px 20px 0px 0px;
+}
+.itemId {
+  margin-top: 10px;
+  font-family: Montserrat;
+  font-style: normal;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+.itemName {
+  font-family: Montserrat;
+  font-style: normal;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+}
+.itemDescription {
+  font-family: Montserrat;
+  font-style: normal;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.3);
+}
+.sellerInfo {
+  font-family: Montserrat;
+  font-style: normal;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+}
+.leftMargin {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.sellerNameImage {
+  width: 100%;
+  height: 100%;
+}
+.sellerName {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  color: #cb202d;
+}
+.sellerName2 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 21px;
+  color: #000000;
+}
+
+.enquiryButton {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  --background: #cb202d;
+  --border-radius: 10px;
+  height: 40px;
+}
+.enquiryButton1 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  --background: #0c9a00;
+  --border-radius: 10px;
+  height: 40px;
+}
+.popover-content.sc-ion-popover-md {
+  border-radius: 10px;
+}
+.popover-content.sc-ion-popover-md {
+  position: initial;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.createpop2 {
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 18px;
+  line-height: 26px;
+  top: 17px;
+  margin-bottom: 12px;
+}
+.createpop3 {
+  height: 50px;
+  width: 100%;
+  margin-left: -1px;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+}
+.enquiryInput {
+  width: 100%;
+  height: 100%;
+  --background: #f3f3f3;
+}
+.newSearchBar{
+  /* --box-shadow: blueviolet; */
+  margin-top: 49px;
+  width: 100%;
+  max-width: 724px;
+}
+.inputenq {
+  width: 80vw;
+  height: 100%;
+}
+.sendEnquiryButton {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+}
+.IIAFooter {
+  position: fixed;
+  width: 100%;
+  bottom: 0px !important;
+}
+.no-items {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.buyeritemListCard {
+  border-radius: 10px;
+  margin-top: 20px;
+  height: 100px;
+}
+.buyerListingimage {
+  height: 100px;
+}
+
+.itemListCardContent {
+  height: 95px;
+}
+.itemListItemImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 80%;
+  height: 80%;
+}
+.grid {
+  margin-top: 20px;
+  margin-left: 27px;
+  margin-right: 27px;
+}
+.row {
+  background: #ffffff;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+}
+.mg {
+  border-radius: 10px 0px 0px 10px !important;
+  overflow: hidden;
+}
+.itemListName {
+  margin-top: 3%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 1000;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+.itemListSellerName {
+  margin-top: 2%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+}
+.itemListPrice {
+  margin-top: 2%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+.IIAcontent {
+  height: 83vh;
+  min-height: 500px;
+  left: 3%;
+  right: 3%;
+}
+.firstPageCategory {
+  margin-left: 5%;
+}
+.CategorySubCategoryGrid {
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.firstPageCategoryName {
+  margin-left: 7.4%;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+.firstPageSubcategory {
+  margin-top: 10px;
+  height: 80px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+.firstPageSubcategoryName {
+  width: 100%;
+  display: block;
+  margin: auto;
+  padding-top: auto;
+  padding-bottom: auto;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 15px;
+  color: #000000;
+}
+.noItems {
+  margin-top: 40vh;
+}
+.enquiryButtonFooter {
+  position: absolute;
+  height: 80px;
+  bottom: 0px;
+  max-width: 600px;
+  --background: white;
+}
+.b2bcard {
+  width: 80%;
+  margin-left: 9%;
+  margin-top: 0;
+}
+.b2bdropdownBttn {
+  --background: #ffffff;
+  border: 1px solid #cb202d;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 13px;
+  line-height: 20px;
+  color: #cb202d;
+  width: 85%;
+  margin-top: 5px;
+  height: 50px;
+  text-transform: none;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  margin-bottom: 0px;
+}
+.searchBar{
+  --box-shadow: none!important;
+  margin-top: 10px;
+}
