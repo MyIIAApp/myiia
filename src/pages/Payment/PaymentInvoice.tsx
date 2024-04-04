@@ -45,7 +45,6 @@ class PaymentInvoice extends React.Component<
       newURLpdf:""
     };
   }
-
   regenrateOrDeleteFake(invoiceId) {
     let operation = "update";
     PaymentService.RegenerateOrDeleteInvoice(
@@ -62,12 +61,31 @@ class PaymentInvoice extends React.Component<
         console.log(e);
       });
   }
-
+  autodownload(base64,buyerName){
+    var binary = atob(base64);
+    var len = binary.length;
+    var buffer = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        buffer[i] = binary.charCodeAt(i);
+    }
+    var blob = new Blob([buffer], { type: 'application/pdf' });
+    saveAs(blob,`${buyerName}.pdf`);
+  }
+  async fetchPdf(invoiceId){
+    let data = {
+      invoiceId
+    };
+    const response  = await fetch(`https://iiaonline.in/genrate_e_invoice_irn_pdf.php`,{
+      method:"POST",
+      body:JSON.stringify(data)
+    });
+    const result = await response.blob();
+    return result;
+  }
   componentDidMount() {
     PaymentService.BeforeInvoiceSave(this.props).then(res=>{
       let data = (JSON.parse(res.response));
       let invoiceId = res.invoiceId;
-      let newblobdata = (res.pdfresponse) ? res.pdfresponse.blob() :""; 
       let buyerGST = this.props.userdetails.gstin;         
       let buyerName = this.props.userdetails.unitName; 
          if(data.status_cd==1){
@@ -87,10 +105,16 @@ class PaymentInvoice extends React.Component<
          .then((response: invoice) => {
             if(response.paymentSuccess){
               PaymentService.updateInvoiceId(this.props.userId,invoiceId).then(res=>{
-                if(buyerGST && buyerGST.substring(1, 5)!="0000"){
-                  saveAs(newblobdata,`${buyerName}.pdf`);
-                }
                 this.regenrateOrDeleteFake(invoiceId);
+                try{
+                  if(buyerGST && buyerGST.substring(0, 4)!="0000"){
+                    this.fetchPdf(invoiceId).then(blob=>{
+                      saveAs(blob,`${buyerName}.pdf`);
+                    })
+                 }
+                }catch(err){
+                  console.log("Failed pdf creation!!");
+                }
               })
             }
            this.setState({ invoiceObject: response, showloading: false })
