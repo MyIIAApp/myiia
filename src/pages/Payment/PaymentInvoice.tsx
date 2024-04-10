@@ -173,9 +173,7 @@ class PaymentInvoice extends React.Component<
             </IonSegment>
         </IonGrid>
       );
-
     }
   }
 }
-
 export default PaymentInvoice;
