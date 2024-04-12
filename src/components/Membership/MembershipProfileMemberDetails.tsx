@@ -247,7 +247,7 @@ class MembershipProfileC extends React.Component<
             </IonSelect>
           </IonItem>
 
-          <IonItem className="basicInput membershipProfileInput">
+          <IonItem className="basicInput membershipProfileInput" style={{display:'none'}}>
             <IonRow>
               <IonCol size="12">
                   <p style={{color:"red",textAlign:"justify",marginBottom:"3px"}}>IIA NEWS is available free of cost online through a registered mobile number by SMS/WhatsApp
