@@ -1,11 +1,12 @@
 import React from "react";
 import { LoginMetadata } from "../../models/LoginMetadata";
-import { IonCard, IonCol, IonContent, IonGrid, IonList, IonPage, IonRouterLink, IonRow } from "@ionic/react";
+import { IonCard, IonCol, IonContent, IonGrid, IonSpinner, IonPage, IonRouterLink, IonRow } from "@ionic/react";
 import { PaymentRecordAllInvoice } from "../../models/Payment/PaymentRecordAllInvoice";
-
+import { saveAs } from 'file-saver';
 interface PaymentInvoiceFilteredProps {
     loginMetadata: LoginMetadata;
     filteredList: PaymentRecordAllInvoice[];
+    invoiceId:string;
 }
 
 interface PaymentInvoiceFilteredStates {
@@ -18,6 +19,33 @@ class PaymentInvoiceFiltered extends React.Component<PaymentInvoiceFilteredProps
         this.state = {
         };
     }
+
+    async getNewInvoice(invoiceId,index,payment){
+        if(!this.props.invoiceId) return;
+        const tempVariable = this.props.filteredList[index].InvoicePath
+   ;
+        const updatedFilteredList = [...this.props.filteredList];
+        updatedFilteredList[index].InvoicePath = "";
+        this.setState({ filteredList: updatedFilteredList, isLoading: true });
+        const data = {
+            invoiceId: invoiceId,
+            payment:payment
+        };
+        try {
+            const response = await fetch('https://iiaonline.in/newapi_iia/fetchwithIRNInvoice.php', {
+                method: "POST",
+                body: JSON.stringify(data)
+            });
+            const result = await response.blob();
+            saveAs(result, `${payment.AdminName}.pdf`);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+           
+        }
+        updatedFilteredList[index].InvoicePath= tempVariable;
+        this.setState({ filteredList: updatedFilteredList, isLoading: false });
+       }
+
     render() {
         console.log(this.props.filteredList)
         if(this.props.filteredList.length === 0)
@@ -30,7 +58,7 @@ class PaymentInvoiceFiltered extends React.Component<PaymentInvoiceFilteredProps
         }
         return (
             <IonContent>
-                {this.props.filteredList.slice(0, 10).map((paymentList: PaymentRecordAllInvoice) => {
+                {this.props.filteredList.slice(0, 10).map((paymentList: PaymentRecordAllInvoice,index) => {
                     return (
                                             <IonCard className="payGrid" key={paymentList.DateTime}>
                                                 <IonGrid className="payCard">
@@ -51,14 +79,27 @@ class PaymentInvoiceFiltered extends React.Component<PaymentInvoiceFilteredProps
                                                         <IonCol size="7" className="payDivide payTime" class="ion-no-padding">
                                                         {paymentList.DateTime}
                                                         </IonCol>
-                                                        <IonCol size="4.5" class="ion-no-padding ion-text-end">
-                                                            <IonRouterLink
-                                                                href={paymentList.InvoicePath}
-                                                                className="payContent"
-                                                            >
-                                                                Download Invoice
-                                                            </IonRouterLink>
-                                                        </IonCol>
+                                                        {
+                                                            (this.props.invoiceId) ? 
+                                                            <IonCol size="4.5" class="ion-no-padding ion-text-end" 
+                                                            style={{color:'#cb202d',textDecoration:'underline'}}
+                                                            onClick={()=>this.getNewInvoice(paymentList.InvoiceId,index,paymentList)}>
+                                                                {
+                                                                    (paymentList.InvoicePath) ? 'Download Invoice':
+                                                                    <IonSpinner style={{width:'20px'}}></IonSpinner>
+                                                                }    
+                                                            </IonCol>:
+                                                            <IonCol size="4.5" class="ion-no-padding ion-text-end">
+                                                                <IonRouterLink
+                                                                    href={paymentList.InvoicePath}
+                                                                    className="payContent"
+                                                                    >
+                                                                    Download Invoice
+                                                                </IonRouterLink>
+                                                            </IonCol>
+                                                        }
+                                                        
+
                                                     </IonRow>
                                                     <IonRow className="no-padding payDivide payTime">
                                                         Payment by &nbsp;<strong>{paymentList.AdminName}</strong>&nbsp; of chapter &nbsp;<strong>{paymentList.ChapterName}</strong>

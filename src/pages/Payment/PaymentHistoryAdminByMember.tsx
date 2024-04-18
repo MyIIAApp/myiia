@@ -35,7 +35,7 @@ import  DownloadPaymentInExcelServices  from "../../services/DownloadPaymentInEx
 import { PaymentRecordAllInvoice } from "../../models/Payment/PaymentRecordAllInvoice";
 import { PaymentRecordResponse } from "../../models/Payment/PaymentRecordAllInvoiceResponse";
 import PaymentInvoiceFiltered from "./PaymentInvoiceFiltered";
-
+import { saveAs } from 'file-saver';
 interface PaymentHistoryAdminStates {
     PaymentHistoryRecord: any;
     showloading: boolean;
@@ -111,28 +111,52 @@ class PaymentHistoryAdminByMember extends React.Component<PaymentHistoryAdminPro
                 this.setState({ showloading: false })
             })
     }
+    // paymentDatabyInvoice() {
+    //   PaymentService.paymentServiceForAdminByInvoice(
+    //     this.props.loginMetadata,
+    //     true,
+    //     this.state.invoiceId
+    // )
+    //     .then((response: any) => {
+    //         this.setState({ PaymentHistoryRecord: response.paymentRecord, showloading: false })
+    //     })
+    //     .catch(() => {
+    //         this.setState({ showloading: false })
+    //     })
+    // }
+
     paymentDatabyInvoice() {
-      PaymentService.paymentServiceForAdminByInvoice(
-        this.props.loginMetadata,
-        true,
-        this.state.invoiceId
-    )
-        .then((response: any) => {
-            this.setState({ PaymentHistoryRecord: response.paymentRecord, showloading: false })
-        })
-        .catch(() => {
-            this.setState({ showloading: false })
-        })
+      this.paymentDataAllInvoice(true);
     }
+
+    async getNewInvoice(){
+      const data = {
+          invoiceId: this.state.invoiceId,
+      };
+      try {
+          const response = await fetch('https://iiaonline.in/newapi_iia/fetchwithIRNInvoice.php', {
+              method: "POST",
+              body: JSON.stringify(data)
+          });
+          const result = await response.blob();
+          saveAs(result, `${data.invoiceId}.pdf`);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+         
+      }
+     }
+
     paymentDataAllInvoice(forceRefresh: boolean) {
       this.setState({ invoiceList: [], showloading: true, showMemberEntry: false });
+      let searchValue = (this.state.keyword) ? this.state.keyword : this.state.invoiceId
       PaymentService.paymentAllInvoices(
         this.props.loginMetadata,
         forceRefresh,
-        this.state.keyword
+        searchValue
     )
         .then((response: PaymentRecordResponse) => {
             this.setState({ invoiceList: response.paymentRecord, showloading: false })
+            console.log(this.state.invoiceList)
         })
         .catch(() => {
         })
@@ -232,7 +256,7 @@ class PaymentHistoryAdminByMember extends React.Component<PaymentHistoryAdminPro
                       color="dark"
                       maxlength={20}
                       value={this.state.invoiceId}
-                      placeholder="Enter Invoice Id"
+                      placeholder="Enter Keywords"
                       onIonChange={(e) => this.onInvoiceIdChange(e)}
                     ></IonInput>
                     <IonIcon
@@ -301,7 +325,8 @@ class PaymentHistoryAdminByMember extends React.Component<PaymentHistoryAdminPro
             );
         }
         else {
-          if(this.state.invoiceId != "")
+          // this.state.invoiceId != ""
+          if(false)
           {
             if (this.state.showloading) {
               return (
@@ -372,7 +397,7 @@ class PaymentHistoryAdminByMember extends React.Component<PaymentHistoryAdminPro
               </IonPage>
             )
           }
-          else if (this.state.keyword != "")
+          else if (this.state.keyword != "" || this.state.invoiceId != "")
           {
             if (this.state.showloading) {
               return (
@@ -388,17 +413,21 @@ class PaymentHistoryAdminByMember extends React.Component<PaymentHistoryAdminPro
                       </IonContent>
                   </IonPage>
               );
-          }
+            }
             return(
-              <IonPage>
-                <HeaderToolbar
-          refreshPage={() => { }}
-          previousPage={() => {this.setState({showMemberEntry:true, invoiceList: []}) }}
-          showBackButton={true}
-          showRefreshButton={false}
-        />
-                <PaymentInvoiceFiltered filteredList={this.state.invoiceList} loginMetadata={this.props.loginMetadata} ></PaymentInvoiceFiltered>
-              </IonPage>)
+            <IonPage>
+              <HeaderToolbar
+                refreshPage={() => { }}
+                previousPage={() => {this.setState({showMemberEntry:true, invoiceList: []}) }}
+                showBackButton={true}
+                showRefreshButton={false}
+              />
+              <PaymentInvoiceFiltered 
+              filteredList={this.state.invoiceList} 
+              invoiceId = {this.state.invoiceId}
+              loginMetadata={this.props.loginMetadata} 
+              ></PaymentInvoiceFiltered>
+            </IonPage>)
             }
           else {
             return (
