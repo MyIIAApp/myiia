@@ -318,6 +318,7 @@ class CreateTicketSearch extends React.Component<
                 loginMetadata={this.props.loginMetadata}
                 userId={this.state.userDetails.id}
                 memberId={this.state.memberId}
+                phoneNumber={this.state.phoneNumber}
               />
             }
           </IonContent>

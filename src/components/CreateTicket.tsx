@@ -63,6 +63,7 @@ interface CreateTicketPageProps {
   loginMetadata: LoginMetadata;
   userId: number;
   memberId:string;
+  phoneNumber?:string;
 }
 
 class CreateTicket extends React.Component<
@@ -370,9 +371,15 @@ class CreateTicket extends React.Component<
   }
 
   onNumberSubmitClicked(event: any) {
-    this.GetPhoneNumber().then(res=>{
-      this.setState({ phoneNumber: res});
-    })
+
+    if(this.props.phoneNumber){
+      this.setState({ phoneNumber: this.props.phoneNumber});
+    }else{
+      this.GetPhoneNumber().then(res=>{
+        this.setState({ phoneNumber: res});
+      })
+    }
+    
     
     setTimeout(() => {
       HelpdeskService.CreateTicket(

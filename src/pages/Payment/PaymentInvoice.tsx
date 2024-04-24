@@ -14,6 +14,8 @@ interface PaymentStates {
   showloading: boolean;
   invoiceObject: invoice;
   newURLpdf:string;
+  invoiceNo:string;
+  buyerName:string;
 }
 interface PaymentProps {
   loginMetadata: LoginMetadata;
@@ -42,7 +44,9 @@ class PaymentInvoice extends React.Component<
       alertMessage: "",
       showloading: true,
       invoiceObject: new invoice(),
-      newURLpdf:""
+      newURLpdf:"",
+      invoiceNo:"",
+      buyerName:""
     };
   }
   regenrateOrDeleteFake(invoiceId) {
@@ -82,6 +86,19 @@ class PaymentInvoice extends React.Component<
     const result = await response.blob();
     return result;
   }
+
+  async fetchInvoice(){
+      let data = {
+        invoiceId:this.state.invoiceNo
+      };
+      const response  = await fetch(`https://iiaonline.in/newapi_iia/recordpaymentinvoice.php`,{
+        method:"POST",
+        body:JSON.stringify(data)
+      });
+      const result = await response.blob();
+      saveAs(result,`${this.state.buyerName}.pdf`);
+  }
+  
   componentDidMount() {
     PaymentService.BeforeInvoiceSave(this.props).then(res=>{
       let data = (JSON.parse(res.response));
@@ -112,6 +129,7 @@ class PaymentInvoice extends React.Component<
                       saveAs(blob,`${buyerName}.pdf`);
                     })
                  }
+                 this.setState({invoiceNo:invoiceId,buyerName:buyerName});
                 }catch(err){
                   console.log("Failed pdf creation!!");
                 }
@@ -165,10 +183,14 @@ class PaymentInvoice extends React.Component<
             Payment Successful
           </IonSegment>
           <IonSegment mode ="md">
-          
-          <IonRouterLink href={this.state.newURLpdf}>
+
+          <p style={{textDecoration:'underline',margin:'0',color:'brown'}} onClick={()=>this.fetchInvoice()}>
             Download Invoice
-          </IonRouterLink>
+          </p>
+
+          {/* <IonRouterLink href={this.state.newURLpdf}>
+            Download Invoice
+          </IonRouterLink> */}
 
             </IonSegment>
         </IonGrid>
