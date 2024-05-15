@@ -62,6 +62,7 @@ interface HomeStates {
   popRedirectingUrl: string;
   showLoading: boolean;
   showPriceTable:boolean;
+  newshow:string;
 }
 interface HomeProps {
   loginMetadata: LoginMetadata;
@@ -78,9 +79,16 @@ class Home extends React.Component<HomeProps, HomeStates> {
       showEventPop: false,
       showLoading: true,
       showPriceTable:false,
+      newshow:""
     };
   }
+  async getNews(){
+    const response  = await fetch('https://iiaonline.in/newapi_iia/getnewsupdate.php');
+    const result  = await response.json();
+    this.setState({newshow:result});
+  }
   componentDidMount() {
+    this.getNews();
     EventPopOverService.GetPopOverURL(this.props.loginMetadata).then((resp) => {
 
       this.setState({ popUrl: resp.url, popRedirectingUrl: resp.redirectingUrl });
@@ -132,7 +140,16 @@ class Home extends React.Component<HomeProps, HomeStates> {
                   {/* <IonButton class="eventPopButton" onClick={()=>{this.setState({showEventPop:false})}}>Cancel</IonButton> */}
                 </IonRouterLink>
               </IonPopover>
-              <IonSegment mode ="md" className="welcomeSeg">
+              
+            <IonSegment mode ="md" className="msmeSeg marque2">
+              <div className="marqueecontainer">
+                <div className="marquee">
+                  {this.state.newshow}
+                </div>
+              </div>
+              </IonSegment>
+
+              <IonSegment mode ="md" className="welcomeSeg" style={{marginTop:'1%'}}>
                 Welcome to My IIA !
               </IonSegment>
               <IonSegment mode ="md" className="msmeSeg">
