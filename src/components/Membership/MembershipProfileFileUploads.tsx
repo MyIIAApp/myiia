@@ -851,6 +851,16 @@ class MembershipProfileFileUploads extends React.Component<
     }
   }
 
+  async sendSMS(){
+    const data = {
+      ...this.props.membershipProfile
+    }
+    const response = await fetch('https:iiaonline.in/newapi_iia/makeMemberSMS.php',{
+      method:'POST',
+      body:JSON.stringify(data)
+    });
+  }
+
   applyForMembership() {
     this.props.membershipProfile.country = "India";
     if (!this.validate(this.props.membershipProfile)) {
@@ -873,6 +883,7 @@ class MembershipProfileFileUploads extends React.Component<
               showAlert: true,
               alertMessage: "Profile Submitted Successfully",
             });
+            this.sendSMS();
             this.props.changePage(HomePage.Page);
           } else {
             let newLoginMetaData = this.props.loginMetadata;
