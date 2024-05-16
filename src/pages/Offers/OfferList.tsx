@@ -32,6 +32,7 @@ interface OfferListStates {
 interface OfferListProps {
   loginMetadata: LoginMetadata;
   category: string;
+  searialNo:number;
 }
 
 class OfferList extends React.Component<OfferListProps, OfferListStates> {
@@ -45,15 +46,25 @@ class OfferList extends React.Component<OfferListProps, OfferListStates> {
       showLoading: true,
     };
   }
-
+  async getOffeer(){
+    const response  = await fetch(`https://iiaonline.in/newapi_iia/getOffer.php?serailNo=${this.props.searialNo}`);
+    const result = await response.json();
+    return result;
+  }
   componentDidMount() {
-    OfferService.GetOffers(this.props.loginMetadata, false, this.props.category)
-      .then((offerResponse: OfferResponse) => {
-        this.setState({ showLoading: false, offerList: offerResponse.offer });
-      })
-      .catch(() => {
-        this.setState({ showLoading: false });
-      });
+    this.getOffeer().then(res=>{
+      this.setState({ showLoading: false, offerList: res });
+    })
+    .catch(()=>{
+      this.setState({ showLoading: false });
+    })
+    // OfferService.GetOffers(this.props.loginMetadata, false, this.props.category)
+    //   .then((offerResponse: OfferResponse) => {
+    //     this.setState({ showLoading: false, offerList: offerResponse.offer });
+    //   })
+    //   .catch(() => {
+    //     this.setState({ showLoading: false });
+    //   });
   }
 
   render() {
@@ -70,16 +81,16 @@ class OfferList extends React.Component<OfferListProps, OfferListStates> {
     return (
       <IonGrid className="limitContent">
         <IonList>
-          {this.state.offerList.map((offerItem: Offer) => {
+          {this.state.offerList.map((offerItem: any) => {
             return (
-              <IonCard key={offerItem.SNo} class="offerlist">
+              <IonCard key={offerItem.id} class="offerlist">
                 <IonGrid>
                   <IonRow>
-                    <IonCol size="8">
-                      <IonRow class="offerlistdet1">{offerItem.Name}</IonRow>
-                      <IonRow class="offerlistdet2">
+                    <IonCol size="9">
+                      <IonRow class="offerlistdet1" style={{lineHeight:'16px'}}>{offerItem.OrgName}</IonRow>
+                      {/* <IonRow class="offerlistdet2">
                         {offerItem.OfferSummary}
-                      </IonRow>
+                      </IonRow> */}
                       <IonRow class="offerlistdet3">{offerItem.city}</IonRow>
                     </IonCol>
                     <IonCol>
@@ -87,7 +98,7 @@ class OfferList extends React.Component<OfferListProps, OfferListStates> {
                       <IonRow>
                         <IonCard
                           class="viewbutton"
-                          onClick={(e) => this.onViewClick(offerItem.SNo)}
+                          onClick={()=>window.open(offerItem.attachpdf)}
                         >
                           <IonSegment mode ="md">
                             <IonImg src={viewoffer} class="viewsvg" />
