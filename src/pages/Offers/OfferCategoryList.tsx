@@ -32,6 +32,7 @@ interface OfferCategoryListStates {
   promoteClick: boolean;
   currentview: OfferView;
   category: string;
+  searialNo:number;
 }
 
 interface OfferCategoryListProps {
@@ -49,6 +50,7 @@ class OfferCategoryList extends React.Component<
       promoteClick: false,
       currentview: OfferView.OfferCategoryList,
       category: "",
+      searialNo:0,
     };
   }
 
@@ -86,7 +88,7 @@ class OfferCategoryList extends React.Component<
                     <IonCard
                       class="offercard"
                       onClick={(e) =>
-                        this.onCateogryClicked("IT Solution & Electronics")
+                        this.onCateogryClicked("IT Solution & Electronics",1)
                       }
                     >
                       <IonRow>
@@ -102,7 +104,7 @@ class OfferCategoryList extends React.Component<
                   <IonCol>
                     <IonCard
                       class="offercard"
-                      onClick={(e) => this.onCateogryClicked("Healthcare")}
+                      onClick={(e) => this.onCateogryClicked("Healthcare",3)}
                     >
                       <IonRow>
                         <IonSegment mode ="md">
@@ -120,7 +122,7 @@ class OfferCategoryList extends React.Component<
                     <IonCard
                       class="offercard"
                       onClick={(e) =>
-                        this.onCateogryClicked("Health Insurance")
+                        this.onCateogryClicked("Health Insurance",4)
                       }
                     >
                       <IonRow>
@@ -137,7 +139,7 @@ class OfferCategoryList extends React.Component<
                     <IonCard
                       class="offercard"
                       onClick={(e) =>
-                        this.onCateogryClicked("Hotels and Restaurants")
+                        this.onCateogryClicked("Hotels and Restaurants",5)
                       }
                     >
                       <IonRow>
@@ -155,7 +157,7 @@ class OfferCategoryList extends React.Component<
                   <IonCol>
                     <IonCard
                       class="offercard"
-                      onClick={(e) => this.onCateogryClicked("Automobiles")}
+                      onClick={(e) => this.onCateogryClicked("Automobiles",7)}
                     >
                       <IonRow>
                         <IonSegment mode ="md">
@@ -172,7 +174,7 @@ class OfferCategoryList extends React.Component<
                       class="offercard"
                       onClick={(e) =>
                         this.onCateogryClicked(
-                          "Steel Pallet & Material Handling"
+                          "Steel Pallet & Material Handling",11
                         )
                       }
                     >
@@ -194,7 +196,7 @@ class OfferCategoryList extends React.Component<
                     <IonCard
                       class="offercard"
                       onClick={(e) =>
-                        this.onCateogryClicked("Utensils & Kitchen Items")
+                        this.onCateogryClicked("Utensils & Kitchen Items",10)
                       }
                     >
                       <IonRow>
@@ -211,7 +213,7 @@ class OfferCategoryList extends React.Component<
                     <IonCard
                       class="offercard"
                       onClick={(e) =>
-                        this.onCateogryClicked("COVID-19 Related Items")
+                        this.onCateogryClicked("COVID-19 Related Items",14)
                       }
                     >
                       <IonRow>
@@ -228,7 +230,7 @@ class OfferCategoryList extends React.Component<
                 <IonRow>
                   <IonCard
                     class="offercardother"
-                    onClick={(e) => this.onCateogryClicked("")}
+                    onClick={(e) => this.onCateogryClicked("",20)}
                   >
                     <IonSegment mode ="md">
                       <IonImg src={offercat9} class="offercardothertext" />
@@ -254,8 +256,8 @@ class OfferCategoryList extends React.Component<
     this.setState({ currentview: OfferView.OfferCategoryList });
   }
 
-  private onCateogryClicked(category: string) {
-    this.setState({ category: category, currentview: OfferView.OfferList });
+  private onCateogryClicked(category: string,searialNo1:number) {
+    this.setState({ category: category, currentview: OfferView.OfferList,searialNo:searialNo1 });
   }
 
   private getOfferList() {
@@ -271,6 +273,7 @@ class OfferCategoryList extends React.Component<
           <OfferList
             loginMetadata={this.props.loginMetadata}
             category={this.state.category}
+            searialNo={this.state.searialNo}
           />
         </IonContent>
       </IonPage>
