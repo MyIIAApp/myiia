@@ -45,6 +45,7 @@ interface ProductProps {
   heading: string;
   editItemDetails: (list: any) => void;
   returnToHomePage: () => void;
+  editCheck:boolean;
 }
 
 class CreateNewProduct extends React.Component<ProductProps, ProductStates> {
@@ -61,6 +62,11 @@ class CreateNewProduct extends React.Component<ProductProps, ProductStates> {
       Price: this.props.items.Price,
       showAlert: false,
     };
+  }
+  componentDidMount(): void {
+    if(this.props.editCheck){
+      this.setState({PhotoPath:''})
+    }
   }
   render() {
     return (

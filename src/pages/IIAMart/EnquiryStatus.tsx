@@ -303,10 +303,9 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
                                                         color: "dark",
                                                         duration: 2000,
                                                         message:
-                                                          "Deleted Successfully",
+                                                       "Deleted Successfully",
                                                       }
                                                     );
-
                                                   await toast.present();
                                                 });
                                               }}
@@ -344,6 +343,7 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
                     editItemDetails={(list) =>
                       this.editItemDetails(list, this.state.editOrNew)
                     }
+                    editCheck = {this.state.editOrNew}
                     returnToHomePage={() => this.returnToHomePage()}
                   />
                 )}
