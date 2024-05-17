@@ -91,22 +91,10 @@ class NewsList extends React.Component<NewsListProps, NewsListStates> {
         />
         <IonContent>
           <IonGrid className="limitContent">
-            <IonSlides
-              className="newsSlides"
-              scrollbar={false}
-              options={slideOpts}
-            >
-              {this.state.newsList.map((newsItem: News) => {
-                return (
-                  <IonSlide key={newsItem.id}>
-                    <NewsCard
-                      news={newsItem}
-                      loginMetadata={this.props.loginMetadata}
-                    />
-                  </IonSlide>
-                );
-              })}
-            </IonSlides>
+             
+                <NewsCard
+
+                />   
           </IonGrid>
         </IonContent>
       </IonPage>

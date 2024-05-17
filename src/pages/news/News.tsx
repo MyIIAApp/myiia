@@ -6,63 +6,87 @@ import {
   IonImg,
   IonLabel,
   IonSegment,
+  IonList,
+  IonItem,
+  IonIcon
 } from "@ionic/react";
-import moment from "moment";
 import React from "react";
-import { defaultImagePath } from "../../constants/ImageConstants";
-import { LoginMetadata } from "../../models/LoginMetadata";
-import { News } from "../../models/News/News";
 import "../../styles/News.css";
-
+import { chevronDown,chevronForward,chevronUp } from "ionicons/icons";
 interface NewsCardProps {
-  loginMetadata: LoginMetadata;
-  news: News;
+  // loginMetadata: LoginMetadata;
+  // news: News;
+}
+interface NewsCardState{
+  headingarr:any[],
+  subheading:any[]
 }
 
-class NewsCard extends React.Component<NewsCardProps> {
+class NewsCard extends React.Component<NewsCardProps,NewsCardState> {
   constructor(props: NewsCardProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      headingarr:[],
+      subheading:[]
+    };
   }
-
+  async getheading(){
+    const response = await fetch('https://iiaonline.in/newapi_iia/getNotificationCirular.php');
+    const result = await response.json();
+    this.setState({headingarr:result})
+  }
+  async getSubheading(goverId,index,showSection){
+    this.state.headingarr[index].showSection = !showSection;
+    const response = await fetch(`https://iiaonline.in/newapi_iia/getNotiifiCirculSubheading.php?GovtTypeId=${goverId}`);
+    const result = await response.json();
+    this.setState({subheading:result})
+  }
+  componentDidMount(){
+    this.getheading();
+    
+  }
   render() {
     return (
-      <IonGrid className="newsCard">
-        <img src={this.getImagePath()} className="imgStyle" />
-        <p className="ion-text-start labelFont">{this.props.news.title}</p>
-        <p className="ion-no-margin ion-text-start paragraph">
-          {this.props.news.description}
-        </p>
-        <p className="ion-text-start articleBy">
-          <IonLabel color="primary">
-            <br />
-            Posted by
-          </IonLabel>{" "}
-          {this.props.news.chapterName} Chapter
-          {"/ "}
-          {moment(this.props.news.creationTime).format("D MMM YYYY")}
-        </p>
-
-        <IonSegment mode ="md" className="newsFooter">
-          <IonButton
-            expand="block"
-            href={this.props.news.link}
-            className="readButton"
-          >
-            Read Full Article
-          </IonButton>
-        </IonSegment>
+       <IonGrid className="newsCard">
+        <IonList>
+          {
+            this.state.headingarr.map((item:any,index)=>{
+              return(
+                <div id={item.id}>
+                  <IonItem onClick={()=>this.getSubheading(item.id,index,item.showSection)}>
+                    <IonLabel style={{fontWeight:'700'}}>{item.GovtTypeName}</IonLabel>
+                    <IonIcon ios={(item.showSection)? chevronUp:chevronDown} color="dark"></IonIcon>
+                  </IonItem>
+                  {
+                    (item.showSection)?this.state.subheading.map((subheaing:any)=>{
+                      return (
+                        <div style={{width:'95%',marginLeft:'auto'}}>
+                        <h4 style={{margin:'6px 0',fontSize:'15px',fontWeight:'600',color:'#7a1b1d'}}>{subheaing.NotificationTypeName}</h4>
+                          {
+                            (subheaing.subheading).map((subing2:any,index)=>{
+                              return (
+                                <p onClick={()=>window.open(subing2.notificationlink)} 
+                                style={{margin:'4px 0',fontSize:'13px',display:'flex',gap:'2px',marginLeft:'4px'}}> 
+                                <span>{index+1}.</span> <span>{subing2.notificationheading}</span></p>
+                              )
+                            })
+                          }
+                          </div>
+                        );
+                    })
+                    :null
+                  }
+                 
+                </div>
+              )
+            })
+          }  
+        </IonList>
       </IonGrid>
     );
   }
 
-  getImagePath() {
-    if (this.props.news.imagePath === "") {
-      return defaultImagePath;
-    } else {
-      return this.props.news.imagePath;
-    }
-  }
+ 
 }
 
 export default NewsCard;
