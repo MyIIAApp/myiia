@@ -6,6 +6,8 @@ import {
   IonPage,
   IonRow,
   IonSegment,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import React from "react";
 import { LoginMetadata } from "../../models/LoginMetadata";
@@ -14,7 +16,6 @@ import { MemberDashboardService } from "../../services/MemberDashboardService";
 import HeaderToolbar from "../../components/HeaderToolbar";
 import "../../styles/Home.css";
 import bullet from "../../images/bullet.svg";
-import line from "../../images/Line.svg";
 import Loading from "../../components/Loading";
 import { StorageService } from "../../services/StorageService";
 import { TableContentKey } from "../../constants/StorageConstants";
@@ -25,11 +26,13 @@ interface DashboardStates {
   showLoading: boolean;
   afterClick: boolean;
   tableContent: any;
+  showDrop:boolean;
+  activeMember:any[];
+  selectActiveYear:string;
 }
 interface DashboardProps {
   loginMetadata: LoginMetadata;
 }
-
 class Dashboard extends React.Component<DashboardProps, DashboardStates> {
   constructor(props: DashboardProps) {
     super(props);
@@ -38,12 +41,67 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
       showLoading: true,
       afterClick: false,
       tableContent: {},
+      showDrop:false,
+      activeMember:[],
+      selectActiveYear:''
     };
   }
 
+  async getActiveMember(){
+    const response = await fetch('https://iiaonline.in/newapi_iia/getActiveMember.php');
+    const result = await response.json();
+    let len = result.length;
+    this.setState({selectActiveYear:result[len-1].fyear})
+    this.setState({activeMember:result})
+  }
   componentDidMount() {
     this.getdata(false);
+    this.getActiveMember();
   }
+
+  async getmembershipdata(loginMetadata:LoginMetadata,fyear:string){
+    const data = {
+      fyear,
+      loginMetadata,
+    };
+    const response = await fetch('https://iiaonline.in/newapi_iia/getmemberhsipdashboard_Test.php',{
+      method:'POST',
+      body:JSON.stringify(data)
+    })
+    const result = await response.json();
+    this.setState({ dashboardObject: result });
+  }
+
+  async getdatanew2(type:string,loginMetadata:any){
+    const data = {
+      type:type,
+      loginMetadata:loginMetadata,
+      fyear:this.state.selectActiveYear
+    };
+    const response = await fetch('https://iiaonline.in/newapi_iia/Financialyearmemberdashboar.php',{
+      method:"POST",
+      body:JSON.stringify(data)
+    })
+    .then(res=>{
+      return res.json();
+    })
+    return response;
+  }
+  
+  getnewdata(type:string,loginMetadata:LoginMetadata){  
+    this.setState({ showLoading: true });
+    this.getdatanew2(type,loginMetadata).then(resp=>{
+      this.setState({tableContent: resp,showLoading:false, afterClick: true});
+    }).catch(()=>{
+      this.setState({showLoading:false});
+    }) 
+  }
+
+  selecteActivemember(e:any){
+      this.setState({selectActiveYear:e.detail.value})
+      this.getmembershipdata(this.props.loginMetadata,this.state.selectActiveYear)
+  }
+
   getdata(refresh: boolean) {
     if(refresh)
     {
@@ -53,7 +111,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
         StorageService.Remove(element);
       });})
     }
-    MemberDashboardService.GetMemberDashboard(this.props.loginMetadata, refresh)
+    MemberDashboardService.GetMemberDashboard(this.props.loginMetadata, refresh,this.state.selectActiveYear)
       .then((response: MemberDashboard) => {
         this.setState({ showLoading: false, dashboardObject: response });
       })
@@ -66,12 +124,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
     this.setState({showLoading: true});
       MemberDashboardService.GetNumberClickedData(loginMetadata, dataType).
       then((resp)=>{
-        console.log(resp);
           this.setState({tableContent: resp,showLoading:false, afterClick: true});
       }).catch(()=>{
         this.setState({showLoading:false});
       })
   }
+
+
   render() {
     if(this.state.showLoading)
     {
@@ -140,14 +199,40 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
                   </IonSegment>
                 </IonRow>
                 <IonRow>
+                      <IonCol size="6" className="ion-text-start memberContent" >
+                        <img className="bullet" src={bullet} alt="" />
+                        Active Members 
+                      </IonCol>
+
+                      <IonCol size="3">
+                        <IonSelect style={{padding:'0',color:'red',float:'right'}} 
+                          onIonChange={()=>this.selecteActivemember(event)} 
+                          value={this.state.selectActiveYear}>
+                          {this.state.activeMember.map((item) => (
+                            <IonSelectOption key={item.id} value={item.fyear}>
+                              {item.fyear}
+                            </IonSelectOption>
+                          ))}
+                        </IonSelect>
+                      </IonCol>
+
+                      <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.getnewdata("totalActiveMembershipChapterMembers1",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
+                        {this.state.dashboardObject.Activemembers}
+                      </IonCol>
+
+                     
+                </IonRow>
+
+                
+                {/* <IonRow>
                   <IonCol size="9" className="ion-text-start memberContent">
                     <img className="bullet" src={bullet} alt="" />
-                    Active Members
+                  Previous Year Active Members
                       </IonCol>
-                  <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.onClickData("totalActiveMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
-                    {this.state.dashboardObject.Activemembers}
+                  <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.getnewdata("totalActiveMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
+                    {this.state.dashboardObject.Preyear}
                   </IonCol>
-                </IonRow>
+                </IonRow> */}
                 <IonRow>
                   <IonCol size="9" className="ion-text-start memberContent">
                     <img className="bullet" src={bullet} alt="" />
@@ -168,7 +253,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
                 </IonRow>                
               </IonGrid>
             </IonCard>
-            <IonSegment mode ="md" className="memberCountContent"  onClick={()=>{this.onClickData("totalNewlyAddedMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
+            <IonSegment mode ="md" className="memberCountContent"  onClick={()=>{this.getnewdata("totalNewlyAddedMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
             {this.state.dashboardObject.NewMembers}
             </IonSegment>
             <IonSegment mode ="md" className="memberCounthead">
@@ -206,11 +291,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
             </IonGrid>
             </IonSegment>
             </IonContent>
-          
-
-          
-
-
       </IonPage>
     )
   }
