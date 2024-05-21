@@ -87,7 +87,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
     })
     return response;
   }
-  
+  selecteActivemember = (e: CustomEvent) => {
+    this.setState({ selectActiveYear: e.detail.value });
+    this.getmembershipdata(this.props.loginMetadata,this.state.selectActiveYear)
+  };
   getnewdata(type:string,loginMetadata:LoginMetadata){  
     this.setState({ showLoading: true });
     this.getdatanew2(type,loginMetadata).then(resp=>{
@@ -96,12 +99,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
       this.setState({showLoading:false});
     }) 
   }
-
-  selecteActivemember(e:any){
-      this.setState({selectActiveYear:e.detail.value})
-      this.getmembershipdata(this.props.loginMetadata,this.state.selectActiveYear)
-  }
-
   getdata(refresh: boolean) {
     if(refresh)
     {
@@ -206,7 +203,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
 
                       <IonCol size="3">
                         <IonSelect style={{padding:'0',color:'red',float:'right'}} 
-                          onIonChange={()=>this.selecteActivemember(event)} 
+                          onIonChange={this.selecteActivemember} 
                           value={this.state.selectActiveYear}>
                           {this.state.activeMember.map((item) => (
                             <IonSelectOption key={item.id} value={item.fyear}>
