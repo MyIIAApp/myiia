@@ -65,9 +65,9 @@ class NewsCard extends React.Component<NewsCardProps,NewsCardState> {
                           {
                             (subheaing.subheading).map((subing2:any,index)=>{
                               return (
-                                <p onClick={()=>window.open(subing2.notificationlink)} 
-                                style={{margin:'4px 0',fontSize:'13px',display:'flex',gap:'2px',marginLeft:'4px'}}> 
-                                <span>{index+1}.</span> <span>{subing2.notificationheading}</span></p>
+                                <a target="_blank" href={subing2.notificationlink} 
+                                style={{margin:'4px 0',fontSize:'13px',display:'flex',gap:'2px',marginLeft:'4px',color:'black',textDecoration:'none'}}> 
+                                <span>{index+1}.</span> <span>{subing2.notificationheading}</span></a>
                               )
                             })
                           }
