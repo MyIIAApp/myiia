@@ -95,15 +95,17 @@ class OfferList extends React.Component<OfferListProps, OfferListStates> {
                     </IonCol>
                     <IonCol>
                       <IonRow></IonRow>
-                      <IonRow>
-                        <IonCard
-                          class="viewbutton"
-                          onClick={()=>window.open(offerItem.attachpdf)}
-                        >
-                          <IonSegment mode ="md">
-                            <IonImg src={viewoffer} class="viewsvg" />
-                          </IonSegment>
-                        </IonCard>
+                 <IonRow>
+                        <a href={offerItem.attachpdf} target="_blank">
+                          <IonCard
+                            class="viewbutton"
+                            
+                          >
+                            <IonSegment mode ="md">
+                              <IonImg src={viewoffer} class="viewsvg" />
+                            </IonSegment>
+                          </IonCard>
+                        </a>
                       </IonRow>
                       <IonRow></IonRow>
                     </IonCol>
