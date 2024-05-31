@@ -87,7 +87,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
     })
     return response;
   }
-  
+  selecteActivemember = (e: CustomEvent) => {
+    this.setState({ selectActiveYear: e.detail.value });
+    this.getmembershipdata(this.props.loginMetadata,this.state.selectActiveYear)
+  };
   getnewdata(type:string,loginMetadata:LoginMetadata){  
     this.setState({ showLoading: true });
     this.getdatanew2(type,loginMetadata).then(resp=>{
@@ -96,12 +99,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
       this.setState({showLoading:false});
     }) 
   }
-
-  selecteActivemember(e:any){
-      this.setState({selectActiveYear:e.detail.value})
-      this.getmembershipdata(this.props.loginMetadata,this.state.selectActiveYear)
-  }
-
   getdata(refresh: boolean) {
     if(refresh)
     {
@@ -199,40 +196,16 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
                   </IonSegment>
                 </IonRow>
                 <IonRow>
-                      <IonCol size="6" className="ion-text-start memberContent" >
-                        <img className="bullet" src={bullet} alt="" />
-                        Active Members 
-                      </IonCol>
-
-                      <IonCol size="3">
-                        <IonSelect style={{padding:'0',color:'red',float:'right'}} 
-                          onIonChange={()=>this.selecteActivemember(event)} 
-                          value={this.state.selectActiveYear}>
-                          {this.state.activeMember.map((item) => (
-                            <IonSelectOption key={item.id} value={item.fyear}>
-                              {item.fyear}
-                            </IonSelectOption>
-                          ))}
-                        </IonSelect>
-                      </IonCol>
-
-                      <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.getnewdata("totalActiveMembershipChapterMembers1",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
-                        {this.state.dashboardObject.Activemembers}
-                      </IonCol>
-
-                     
-                </IonRow>
-
-                
-                {/* <IonRow>
                   <IonCol size="9" className="ion-text-start memberContent">
                     <img className="bullet" src={bullet} alt="" />
-                  Previous Year Active Members
+                  Total Active Members
                       </IonCol>
                   <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.getnewdata("totalActiveMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
                     {this.state.dashboardObject.Preyear}
                   </IonCol>
-                </IonRow> */}
+                </IonRow>
+                
+                
                 <IonRow>
                   <IonCol size="9" className="ion-text-start memberContent">
                     <img className="bullet" src={bullet} alt="" />
@@ -250,7 +223,29 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
                   <IonCol size="3" className="ion-text-center membervalue" onClick={()=>{this.onClickData("totalExpiredMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
                   {this.state.dashboardObject.ExpiredMemberships}
                   </IonCol>
-                </IonRow>                
+                </IonRow>   
+                <IonRow style={{borderTop: '1px solid red'}}>
+                      <IonCol size="6" className="ion-text-start memberContent" >
+                        <img className="bullet" src={bullet} alt="" />
+                        Active Members (Year Wise)
+                      </IonCol>
+
+                      <IonCol size="3">
+                        <IonSelect style={{padding:'0',color:'red',float:'right'}} 
+                          onIonChange={this.selecteActivemember} 
+                          value={this.state.selectActiveYear}>
+                          {this.state.activeMember.map((item) => (
+                            <IonSelectOption key={item.id} value={item.fyear}>
+                              {item.fyear}
+                            </IonSelectOption>
+                          ))}
+                        </IonSelect>
+                      </IonCol>
+
+                      <IonCol size="3" className="ion-text-center membervalue"  onClick={()=>{this.getnewdata("totalActiveMembershipChapterMembers1",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
+                        {this.state.dashboardObject.Activemembers}
+                      </IonCol>
+                </IonRow>                             
               </IonGrid>
             </IonCard>
             <IonSegment mode ="md" className="memberCountContent"  onClick={()=>{this.getnewdata("totalNewlyAddedMembershipChapterMembers",this.props.loginMetadata)}} style={{textDecoration:"underline"}}>
@@ -295,5 +290,4 @@ class Dashboard extends React.Component<DashboardProps, DashboardStates> {
     )
   }
 }
-
 export default Dashboard;
