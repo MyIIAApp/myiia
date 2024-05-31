@@ -9,4 +9,5 @@ export class MemberDashboard {
     public NewMembers: string = "";
     public PendingRequests: string = "";
     public ApprovedmemberPaymentPending: string = "";
+    public Preyear: string = "";
 }
