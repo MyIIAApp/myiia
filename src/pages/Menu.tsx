@@ -50,6 +50,7 @@ import {
   MagazineCreationPage,
   ManageMagazinePage,
   IIADirectoryPage,
+  MangaMartADs
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import { UserProfileModel } from "../models/UserProfileModel";
@@ -221,8 +222,12 @@ class Menu extends React.Component<MenuProps, MenuStates> {
           this.getMenuItem(ChapterPage, 6) : null}
         {this.getMenuItem(ApproveMembershipPage, 7)}
         {this.getMenuItem(B2BAdminPage, 5)}
+        {this.props.loginMetadata.chapterId == 82
+          ? this.getMenuItem(MangaMartADs, 19)
+          : undefined}
         {this.getMenuItem(CreateUpadateMembershipPage, 8)}
         {this.getMenuItem(RecordPaymentPage, 9)}
+        
         {this.getMenuItem(PaymentHistoryPageForAdmin, 10)}
         {this.getMenuItem(AdminPaymentByMember, 11)}
         {this.getMenuItem(CreateNewMembership, 12)}
@@ -230,17 +235,25 @@ class Menu extends React.Component<MenuProps, MenuStates> {
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(RengenerateAndDeleteInvoices, 13)
           : undefined}
+
+
+
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(AdminReport, 14)
           : undefined}
         {this.getMenuItem(NonMembershipPayments, 15)}
+
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(MagazineCreationPage, 16) 
           : undefined}
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(ManageMagazinePage, 17) 
           : undefined}
+
         {this.getMenuItem(IIADirectoryPage, 18)}
+
+       
+          
       </div>
     );
   }

@@ -296,3 +296,6 @@
   --box-shadow: none!important;
   margin-top: 10px;
 }
+ion-popover [popover]:not(:popover-open):not(dialog[open]) {
+  display: contents;
+}

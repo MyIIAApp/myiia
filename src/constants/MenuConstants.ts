@@ -259,3 +259,10 @@ export const IIADirectoryPage: AppPage = {
   IosIcon: folderOpenOutline,
   MdIcon: folderOpenOutline
 }
+
+
+export const MangaMartADs: AppPage = {
+  Page: "Manage IIA Mart Ads",
+  IosIcon: folderOpenOutline,
+  MdIcon: folderOpenOutline
+}

@@ -39,6 +39,7 @@ import {
   MagazineCreationPage,
   ManageMagazinePage,
   IIADirectoryPage,
+  MangaMartADs
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import Chapter from "./Chapter";
@@ -56,6 +57,7 @@ import OfferCategoryList from "./Offers/OfferCategoryList";
 import RecordPaymentSearch from "./Payment/RecordPaymentSearch";
 import rejectedMembership from "../images/rejectedMembership.svg";
 import EnquiryStatus from "./IIAMart/EnquiryStatus";
+import ManageAds from "./IIAMart/ManageAds";
 import Insurance from "./Insurance/Insurance";
 import PaymentHistory from "./Payment/PaymentHistory";
 import B2BAdmin from "./B2BAdmin/B2BAdmin";
@@ -73,16 +75,13 @@ import B2BBuyerMain from "./B2BBuyer/B2BBuyerMain";
 import Magazines from "./Magazine/Magazines";
 import MagazineCreate from "./Magazine/MagazineCreate";
 import AdminManageMagazine from "./Magazine/AdminManageMagazine";
-import IIADirectory from "./IIADirectory/IIADirectory"
+import IIADirectory from "./IIADirectory/IIADirectory";
 interface MMenuPagesStates {
   memberShipProfile: MembershipProfileModel;
   membershipStatus: number;
 }
 
-interface MenuPagesProps
-  extends RouteComponentProps<{
-    page: string;
-  }> {
+interface MenuPagesProps extends RouteComponentProps<{page: string;}> {
   changePage: (value: string) => void;
   loginMetadata: LoginMetadata;
   setLoginStateFunction: (loginMetadata: LoginMetadata | null) => void;
@@ -200,6 +199,16 @@ class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
         />
       );
     }
+
+    if (this.props.match.params.page === MangaMartADs.Page) {
+      return (
+        <ManageAds
+        loginMetadata={this.props.loginMetadata}
+        changePage={(value: string) => this.props.changePage(value)}
+        />
+      );
+    }
+
     if (this.props.match.params.page === PaymentHistoryPage.Page) {
       return (
         <PaymentHistory
