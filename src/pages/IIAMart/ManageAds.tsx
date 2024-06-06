@@ -28,7 +28,7 @@ import {
   import "../../styles/IIAMart.css";
   import Edit from "../../images/Edit.svg";
   import { LoginMetadata } from "../../models/LoginMetadata";
-  import { items } from "../../models/IIAMart/items";
+  import Loading from "../../components/Loading";
   import FileUpload from "../../components/FileUpload";
   interface ImageAds{
     id:number;
@@ -54,6 +54,7 @@ import {
     editId:string;
     currentdate:string;
     imageError:string;
+    showLoading:boolean;
   }
   interface EnquiryProps {
     loginMetadata: LoginMetadata;
@@ -79,7 +80,8 @@ import {
         ImgSrc:'',
         editId:'',
         currentdate:'',
-        imageError:''
+        imageError:'',
+        showLoading:true
       };
     }
     componentDidMount() {
@@ -98,225 +100,233 @@ import {
         this.setState(prevState => ({
             adsImages: [...result]
         }));
+        this.setState({showLoading:false})
     }
     clearvalue(){
         this.setState({ showPop: false,editornot:false,filename:'',startDate:'',endDate:'',PhotoPath:'',memberId:'',ImgSrc:''})
     }
     render() {
-      return (
-        <IonPage>
-          <HeaderToolbar
-            refreshPage={() => {
-            //   this.getdata(true);
-            //   this.getSellerItemDetails(true);
-            }}
-            previousPage={() => this.returnToHomePage()}
-            showBackButton={this.state.subPage == 0 ? false : true}
-            showRefreshButton={true}
-          />
-
-            <IonContent>
-
-                <IonPopover
-                    isOpen={this.state.showPop}
-                    onDidDismiss={() => this.clearvalue()}
-                  >
-                     <IonRow>
-                    <IonCol size="12" style={{textAlign:'end',paddingBottom:0}}>
-                        <span style={{paddingRight:'10px',fontSize:'17px'}} onClick={()=>this.clearvalue()}>X</span>
-                    </IonCol>
-                    <IonCol style={{paddingTop:0}}>
-                    <IonSegment mode ="md">
-                        <IonCard color="secondary" className="SendOTPItemCard">
-                        <IonItem class="basicInput createProductInput">
-                        <IonLabel position="floating">MemberId*</IonLabel>
-                        <IonInput
-                            placeholder="MemberId"
-                            inputMode="numeric"
-                            value={this.state.memberId}
-                            onIonChange={(e)=>this.onMemberIdChange(e)}
-                        ></IonInput>
-                        </IonItem>
-                        </IonCard>
-                    </IonSegment>
-
-                    <IonSegment mode="md" className="colorSeg">
-                    <IonCard color="secondary" className="SendOTPItemCard">
-                        <IonItem lines="none" color="secondary">
-                        <IonDatetime
-                            min={this.state.currentdate}
-                            max="2035-06-05"
-                            placeholder="Enter Start Date"
-                            style={{ color: "black" }}
-                            value={this.state.startDate}
-                            onIonChange={(e) => this.onStartDateChange(e)}
-                        ></IonDatetime>
-                        </IonItem>
-                    </IonCard>
-                    </IonSegment>
-                    {/* <IonSegment mode="md">
-                    <IonLabel>To</IonLabel>
-                    </IonSegment> */}
-
-                    <IonSegment mode="md" className="colorSeg">
-                    <IonCard color="secondary" className="SendOTPItemCard">
-                        <IonItem lines="none" color="secondary">
-                        <IonDatetime
-                            min={this.state.currentdate}
-                            max="2035-06-05"
-                            placeholder="Enter End Date"
-                            style={{ color: "black" }}
-                            value={this.state.endDate}
-                            onIonChange={(e) => this.onendDateChange(e)}
-                        ></IonDatetime>
-                        </IonItem>
-                    </IonCard>
-                    
-                    </IonSegment> 
-                    
-
-                    </IonCol >
-
+            return (
+                <IonPage>
+                  <HeaderToolbar
+                    refreshPage={() => {
+                    //   this.getdata(true);
+                    //   this.getSellerItemDetails(true);
+                    }}
+                    previousPage={() => this.returnToHomePage()}
+                    showBackButton={this.state.subPage == 0 ? false : true}
+                    showRefreshButton={true}
+                  />
                     {
-                        (this.state.ImgSrc) ? <IonCol size="12">
-                            <IonImg src={this.state.ImgSrc} style={{width:'70px',height:'70px',margin:'0 auto'}}></IonImg>
-                        </IonCol>:null
-                    }
-                    
-                    
-                    <IonCol size="12" style={{textAligh:'center'}}>
-                        {
-                            (!this.state.PhotoPath) ? 
-                                <>
-                                <p style={{color:'red',margin:'0',textAlign:'center',fontSize:'12px'}}>Image should be (520 x 300)px</p>
-                                <IonSegment mode ="md" class="membershipFileUpload" style={{margin:'0'}}>
-                                    <FileUpload
-                                    supportedExtensions={ImageExtensions}
-                                    loginMetadata={this.props.loginMetadata}
-                                    onFileUploaded={(path: string) =>
-                                        this.onItemImagePathChange(path)
-                                    }
-                                    buttonTitle={"Image"}
-                                    fileDirectory={ItemPhotoDirectory}
-                                    filePath={this.state.PhotoPath}
-                                    buttonLabel="Product Photo"
-                                    disabled
-                                    id="productPhoto"/> 
-                                </IonSegment>  
-                                </>
-                        :<IonButton class="basicButton fileUploadButton" style={{marginLeft:'10%'}}>
-                            <IonGrid>
-                                <IonRow>
-                                <IonCol size="8">
-                                    <IonLabel className="ion-text-wrap">
-                                    {this.state.filename}
-                                    </IonLabel>
-                                </IonCol>
-                                <IonCol size="4" className="ion-align-self-center">
-                                    <IonButton
-                                    class="removeButton"
-                                    color="danger"
-                                    onClick={(e) => this.onRemoveClicked()}
-                                    disabled={this.state.disabled}
-                                    >
-                                    <IonIcon
-                                        slot="end"
-                                        ios={closeCircleOutline}
-                                        md={closeCircleOutline}
-                                    />
-                                    Remove
-                                    </IonButton>
-                                </IonCol>
-                                </IonRow>
-                            </IonGrid>
-                        </IonButton>
-                        }
+                        (this.state.showLoading) ?  
+                        <IonContent>
+                            <Loading />
+                        </IonContent> 
                         
-                    </IonCol>
-                    {
-                        (this.state.imageError) ?<IonCol size="12">  
-                        <IonSegment mode ="md">
-                            <p style={{color:'red',margin:'0'}}>{this.state.imageError}</p>
-                        </IonSegment>
-                    </IonCol> : null
-                    }
-                    
-
-                    <IonCol size="12">
-                        <IonSegment mode ="md">
-                            {
-                                (this.state.editornot) ? <IonButton style={{margin:'0'}}
-                                onClick={()=>this.UpdateMartAds()}
-                                disabled = {!this.state.memberId || !this.state.startDate || !this.state.endDate}
-                                class="createlistbtn ion-text-wrap">
-                                Update
-                                </IonButton> :  <IonButton style={{margin:'0'}}
-                                    onClick={()=>this.addMartAds()}
-                                    disabled = {!this.state.memberId || !this.state.PhotoPath || !this.state.startDate || !this.state.endDate}
-                                    class="createlistbtn ion-text-wrap">
-                                    Add
-                                </IonButton>
-                            }
-                        </IonSegment>
-                    </IonCol>
-                </IonRow>
-                </IonPopover>
-
-                <IonGrid className="limitContent">
-                <IonRow>
-                    <IonCol size="12">
-                    <IonButton style={{margin:'0',width:'100%'}}
-                        onClick={()=>this.setState({showPop:true})}
-                        class="createlistbtn ion-text-wrap">
-                        Post ads
-                    </IonButton>
-
-                    </IonCol>
-                </IonRow>
-                    
-                <IonRow>
-                    {
-                        this.state.adsImages.map((item:any,index)=>{
-                            return (
-                                <IonCol size="6">
-                                    <IonCard>
-                                        <IonImg src={item.adsImage} style={{width:'100%',height:'110px'}}></IonImg>
-                                        <IonCardContent style={{padding:'6px',display:'flex'}}>
-                                            <button className="listbtn" onClick={()=>this.editAds(item.id,item.memberid,item.startDate,item.enddate,item.adsImage)}>
-                                                <IonImg 
-                                                    
-                                                    src={Edit}
-                                                ></IonImg>
-                                            </button>
-                                            
-                                            <div className="activate">
-                                                <IonToggle
-                                                checked={item.status == 1}
-                                                color="success"
-                                                slot="start"
-                                                onClick={(e)=>this.updateAdsStatus(item.id,item.status,e,index)}
-                                                style={{padding:'6px'}}
-                                                ></IonToggle>
-                                            </div>
-                                        </IonCardContent>
-                                    </IonCard>
+                        :
+                        <IonContent>
+                            <IonPopover
+                                isOpen={this.state.showPop}
+                                onDidDismiss={() => this.clearvalue()}
+                            >
+                                <IonRow>
+                                <IonCol size="12" style={{textAlign:'end',paddingBottom:0}}>
+                                    <span style={{paddingRight:'10px',fontSize:'17px'}} onClick={()=>this.clearvalue()}>X</span>
                                 </IonCol>
-                            )
-                        })
+                                <IonCol style={{paddingTop:0}}>
+                                <IonSegment mode ="md">
+                                    <IonCard color="secondary" className="SendOTPItemCard">
+                                    <IonItem class="basicInput createProductInput">
+                                    <IonLabel position="floating">MemberId*</IonLabel>
+                                    <IonInput
+                                        placeholder="MemberId"
+                                        inputMode="numeric"
+                                        value={this.state.memberId}
+                                        onIonChange={(e)=>this.onMemberIdChange(e)}
+                                    ></IonInput>
+                                    </IonItem>
+                                    </IonCard>
+                                </IonSegment>
+            
+                                <IonSegment mode="md" className="colorSeg">
+                                <IonCard color="secondary" className="SendOTPItemCard">
+                                    <IonItem lines="none" color="secondary">
+                                    <IonDatetime
+                                        min={this.state.currentdate}
+                                        max="2035-06-05"
+                                        placeholder="Enter Start Date"
+                                        style={{ color: "black" }}
+                                        value={this.state.startDate}
+                                        onIonChange={(e) => this.onStartDateChange(e)}
+                                    ></IonDatetime>
+                                    </IonItem>
+                                </IonCard>
+                                </IonSegment>
+                                {/* <IonSegment mode="md">
+                                <IonLabel>To</IonLabel>
+                                </IonSegment> */}
+            
+                                <IonSegment mode="md" className="colorSeg">
+                                <IonCard color="secondary" className="SendOTPItemCard">
+                                    <IonItem lines="none" color="secondary">
+                                    <IonDatetime
+                                        min={this.state.currentdate}
+                                        max="2035-06-05"
+                                        placeholder="Enter End Date"
+                                        style={{ color: "black" }}
+                                        value={this.state.endDate}
+                                        onIonChange={(e) => this.onendDateChange(e)}
+                                    ></IonDatetime>
+                                    </IonItem>
+                                </IonCard>
+                                
+                                </IonSegment> 
+                                
+            
+                                </IonCol >
+            
+                                {
+                                    (this.state.ImgSrc) ? <IonCol size="12">
+                                        <IonImg src={this.state.ImgSrc} style={{width:'70px',height:'70px',margin:'0 auto'}}></IonImg>
+                                    </IonCol>:null
+                                }
+                                
+                                
+                                <IonCol size="12" style={{textAligh:'center'}}>
+                                    {
+                                        (!this.state.PhotoPath) ? 
+                                            <>
+                                            <p style={{color:'red',margin:'0',textAlign:'center',fontSize:'12px'}}>Image should be (520 x 300)px</p>
+                                            <IonSegment mode ="md" class="membershipFileUpload" style={{margin:'0'}}>
+                                                <FileUpload
+                                                supportedExtensions={ImageExtensions}
+                                                loginMetadata={this.props.loginMetadata}
+                                                onFileUploaded={(path: string) =>
+                                                    this.onItemImagePathChange(path)
+                                                }
+                                                buttonTitle={"Image"}
+                                                fileDirectory={ItemPhotoDirectory}
+                                                filePath={this.state.PhotoPath}
+                                                buttonLabel="Product Photo"
+                                                disabled
+                                                id="productPhoto"/> 
+                                            </IonSegment>  
+                                            </>
+                                    :<IonButton class="basicButton fileUploadButton" style={{marginLeft:'10%'}}>
+                                        <IonGrid>
+                                            <IonRow>
+                                            <IonCol size="8">
+                                                <IonLabel className="ion-text-wrap">
+                                                {this.state.filename}
+                                                </IonLabel>
+                                            </IonCol>
+                                            <IonCol size="4" className="ion-align-self-center">
+                                                <IonButton
+                                                class="removeButton"
+                                                color="danger"
+                                                onClick={(e) => this.onRemoveClicked()}
+                                                disabled={this.state.disabled}
+                                                >
+                                                <IonIcon
+                                                    slot="end"
+                                                    ios={closeCircleOutline}
+                                                    md={closeCircleOutline}
+                                                />
+                                                Remove
+                                                </IonButton>
+                                            </IonCol>
+                                            </IonRow>
+                                        </IonGrid>
+                                    </IonButton>
+                                    }
+                                    
+                                </IonCol>
+                                {
+                                    (this.state.imageError) ?<IonCol size="12">  
+                                    <IonSegment mode ="md">
+                                        <p style={{color:'red',margin:'0'}}>{this.state.imageError}</p>
+                                    </IonSegment>
+                                </IonCol> : null
+                                }
+                                
+            
+                                <IonCol size="12">
+                                    <IonSegment mode ="md">
+                                        {
+                                            (this.state.editornot) ? <IonButton style={{margin:'0'}}
+                                            onClick={()=>this.UpdateMartAds()}
+                                            disabled = {!this.state.memberId || !this.state.startDate || !this.state.endDate}
+                                            class="createlistbtn ion-text-wrap">
+                                            Update
+                                            </IonButton> :  <IonButton style={{margin:'0'}}
+                                                onClick={()=>this.addMartAds()}
+                                                disabled = {!this.state.memberId || !this.state.PhotoPath || !this.state.startDate || !this.state.endDate}
+                                                class="createlistbtn ion-text-wrap">
+                                                Add
+                                            </IonButton>
+                                        }
+                                    </IonSegment>
+                                </IonCol>
+                            </IonRow>
+                            </IonPopover>
+            
+                            <IonGrid className="limitContent">
+                            <IonRow>
+                                <IonCol size="12">
+                                <IonButton style={{margin:'0',width:'100%'}}
+                                    onClick={()=>this.setState({showPop:true})}
+                                    class="createlistbtn ion-text-wrap">
+                                    Post ads
+                                </IonButton>
+            
+                                </IonCol>
+                            </IonRow>
+                                
+                            <IonRow>
+                                {
+                                    this.state.adsImages.map((item:any,index)=>{
+                                        return (
+                                            <IonCol size="6">
+                                                <IonCard>
+                                                    <IonImg src={item.adsImage} style={{width:'100%',height:'110px'}}></IonImg>
+                                                    <IonCardContent style={{padding:'6px',display:'flex'}}>
+                                                        <button className="listbtn" onClick={()=>this.editAds(item.id,item.memberid,item.startDate,item.enddate,item.adsImage)}>
+                                                            <IonImg 
+                                                                
+                                                                src={Edit}
+                                                            ></IonImg>
+                                                        </button>
+                                                        
+                                                        <div className="activate">
+                                                            <IonToggle
+                                                            checked={item.status == 1}
+                                                            color="success"
+                                                            slot="start"
+                                                            onClick={(e)=>this.updateAdsStatus(item.id,item.status,e,index)}
+                                                            style={{padding:'6px'}}
+                                                            ></IonToggle>
+                                                        </div>
+                                                    </IonCardContent>
+                                                </IonCard>
+                                            </IonCol>
+                                        )
+                                    })
+                                }
+                            </IonRow>
+                            </IonGrid>
+                            <IonToast
+                            isOpen={this.state.alertstatus}
+                            message={this.state.alertMessage}
+                            duration={4000}
+                            onDidDismiss={() => this.setState({ alertstatus: false })}
+                            />
+            
+                        </IonContent>
                     }
-                </IonRow>
-                </IonGrid>
-                <IonToast
-                isOpen={this.state.alertstatus}
-                message={this.state.alertMessage}
-                duration={4000}
-                onDidDismiss={() => this.setState({ alertstatus: false })}
-                />
-
-            </IonContent>
-  
-        </IonPage>
-      );
+                    
+          
+                </IonPage>
+              );
     }   
 
     async UpdateMartAds(){
