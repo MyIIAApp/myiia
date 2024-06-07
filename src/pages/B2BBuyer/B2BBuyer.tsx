@@ -3,27 +3,38 @@ import {
   IonGrid,
   IonPage,
   IonSearchbar,
-  IonList,
-  IonItem,
-  IonRouterLink,
+  IonSlide,
+  IonCard,
+  IonSlides,
   IonLabel,
   IonToggle,
   IonSegment,
-  IonSegmentButton,
+  IonCardContent,
+  IonImg,
 } from "@ionic/react";
 import React from "react";
 import DropDownButton1 from "../../components/DropDownButton1";
 import HeaderToolbar from "../../components/HeaderToolbar";
 import IIAMartCategorySubCategory from "../../JsonFiles/IIAMart.json";
 import { LoginMetadata } from "../../models/LoginMetadata";
-import { B2BPage } from "../../constants/MenuConstants";
+import hoTestimonial2 from "../../images/HoTestimonial2.svg";
 import "../../styles/B2BBuyer.css";
 import { search } from "ionicons/icons";
 import { BuyerService } from "../../services/BuyerService";
 import Loading from "../../components/Loading";
+import hoTestimonial1 from "../../images/HoTestimonial1.svg";
 interface B2BBuyerProps {
   loginMetadata: LoginMetadata;
 }
+
+const slideOpts = {
+  autoplay: true,
+  loop: true,
+  initialSlide: 0,
+  speed: 2000,
+  grabCursor: true,
+};
+
 interface B2BBuyerStates {
   category: string;
   subCategory: string;
@@ -33,6 +44,7 @@ interface B2BBuyerStates {
   isChecked: boolean;
   validItems: any;
   isLoading: boolean;
+  martAds:any[];
 }
 class B2BBuyer extends React.Component<B2BBuyerProps, B2BBuyerStates> {
   constructor(props: B2BBuyerProps) {
@@ -46,13 +58,25 @@ class B2BBuyer extends React.Component<B2BBuyerProps, B2BBuyerStates> {
       isChecked: false,
       validItems: {},
       isLoading: true,
+      martAds:[],
+     
     };
   }
   componentDidMount() {
     BuyerService.GetValidItemList(this.props.loginMetadata).then((response) => {
       this.setState({ validItems: response, isLoading: false });
     });
+    
+    this.getAdsMart();
   }
+
+  async getAdsMart(){
+    // const response  = await fetch(`https://iiaonline.in/IIAMart/getMartAdsUser.php?memberid=${123}`);
+    const response  = await fetch(`https://iiaonline.in/IIAMart/getMartAdsUser.php`);
+    const result = await response.json();
+    this.setState({martAds:result});
+  }
+
   handleInputChange(e) {
     const query = e.target.value;
     this.setState({ searchText: query });
@@ -116,6 +140,29 @@ class B2BBuyer extends React.Component<B2BBuyerProps, B2BBuyerStates> {
             }}
           />
         </IonSegment>
+         {
+            (this.state.martAds.length>0) ?  <IonSegment mode ="md" className="myiiaImgseg">
+            <IonSlides
+              className="myiiaSlider"
+              options={slideOpts}
+              pager={true}
+            >
+              {this.state.martAds.map((item: any) => {
+                return (
+                  <IonSlide key={item.id}>
+                    <IonImg
+                      className="myiiaImage"
+                      src={
+                        item.adsImage
+                      }
+                    />
+                  </IonSlide>
+                );
+              })}
+            </IonSlides>
+    </IonSegment>:null
+         }
+       
 
         {this.state.isLoading ? (
           <Loading />
