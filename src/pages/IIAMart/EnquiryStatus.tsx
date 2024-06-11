@@ -20,6 +20,7 @@ import {
   useIonToast,
   IonList,
   IonPopover,
+  IonAlert
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import React from "react";
@@ -64,6 +65,7 @@ interface EnquiryStates {
   editOrNew: boolean;
   loading: boolean;
   showPop: boolean;
+  showAlert2:boolean;
 }
 interface EnquiryProps {
   loginMetadata: LoginMetadata;
@@ -88,6 +90,7 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
       editOrNew: false,
       loading: false,
       showPop: false,
+      showAlert2:false,
     };
   }
   componentDidMount() {
@@ -96,6 +99,12 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
       this.getSellerItemDetails(true);
     } else {
       this.setState({ showPop: true });
+    }
+  }
+
+  checkPaymentStatus(){
+    if(this.props.loginMetadata.membershipStatus<5){
+
     }
   }
   render() {
@@ -303,9 +312,10 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
                                                         color: "dark",
                                                         duration: 2000,
                                                         message:
-                                                       "Deleted Successfully",
+                                                          "Deleted Successfully",
                                                       }
                                                     );
+
                                                   await toast.present();
                                                 });
                                               }}
@@ -405,6 +415,11 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
             </IonList>
           </IonContent>
         </IonPopover>
+        <IonAlert
+            isOpen={this.state.showAlert2}
+            onDidDismiss={() => this.setState({ showAlert2: false })}
+            message='New enquery received on product list(pay membership to view details)'
+          />
       </IonPage>
     );
   }
@@ -434,6 +449,10 @@ class EnquiryStatus extends React.Component<EnquiryProps, EnquiryStates> {
       });
   }
   getEnquiryList(heading: string, status: string) {
+    if(heading=='Pending' && this.props.loginMetadata.membershipStatus !=5){
+      this.setState({showAlert2:true})
+      return;
+    }
     this.setState({
       subPage: 1,
 
