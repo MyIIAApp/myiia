@@ -50,7 +50,8 @@ import {
   MagazineCreationPage,
   ManageMagazinePage,
   IIADirectoryPage,
-  MangaMartADs
+  MangaMartADs,
+  ManageMartCartegoryADs
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import { UserProfileModel } from "../models/UserProfileModel";
@@ -222,9 +223,14 @@ class Menu extends React.Component<MenuProps, MenuStates> {
           this.getMenuItem(ChapterPage, 6) : null}
         {this.getMenuItem(ApproveMembershipPage, 7)}
         {this.getMenuItem(B2BAdminPage, 5)}
+        
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(MangaMartADs, 19)
           : undefined}
+        {this.props.loginMetadata.chapterId == 82
+          ? this.getMenuItem(ManageMartCartegoryADs, 20)
+          : undefined}
+
         {this.getMenuItem(CreateUpadateMembershipPage, 8)}
         {this.getMenuItem(RecordPaymentPage, 9)}
         

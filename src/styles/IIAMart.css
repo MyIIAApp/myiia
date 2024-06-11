@@ -255,3 +255,7 @@ ion-segment::not(:first-child) .SendOTPItemCard.md{
 .SendOTPItemCard.md {
   margin-bottom: 2px;
 }
+.col12ss{
+  padding-top: 0;
+  padding-bottom: 0;
+}

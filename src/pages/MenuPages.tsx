@@ -39,7 +39,8 @@ import {
   MagazineCreationPage,
   ManageMagazinePage,
   IIADirectoryPage,
-  MangaMartADs
+  MangaMartADs,
+  ManageMartCartegoryADs
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import Chapter from "./Chapter";
@@ -58,6 +59,7 @@ import RecordPaymentSearch from "./Payment/RecordPaymentSearch";
 import rejectedMembership from "../images/rejectedMembership.svg";
 import EnquiryStatus from "./IIAMart/EnquiryStatus";
 import ManageAds from "./IIAMart/ManageAds";
+import ManageCategoryAds from "./IIAMart/ManageCategoryAds";
 import Insurance from "./Insurance/Insurance";
 import PaymentHistory from "./Payment/PaymentHistory";
 import B2BAdmin from "./B2BAdmin/B2BAdmin";
@@ -208,6 +210,16 @@ class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
         />
       );
     }
+
+    if (this.props.match.params.page === ManageMartCartegoryADs.Page) {
+      return (
+        <ManageCategoryAds
+        loginMetadata={this.props.loginMetadata}
+        changePage={(value: string) => this.props.changePage(value)}
+        />
+      );
+    }
+
 
     if (this.props.match.params.page === PaymentHistoryPage.Page) {
       return (

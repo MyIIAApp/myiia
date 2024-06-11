@@ -266,3 +266,9 @@ export const MangaMartADs: AppPage = {
   IosIcon: folderOpenOutline,
   MdIcon: folderOpenOutline
 }
+
+export const ManageMartCartegoryADs: AppPage = {
+  Page: "IIA Mart Category Ads",
+  IosIcon: folderOpenOutline,
+  MdIcon: folderOpenOutline
+}
