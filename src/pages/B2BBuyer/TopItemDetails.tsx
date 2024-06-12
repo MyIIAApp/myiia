@@ -51,7 +51,6 @@ class TopItemDetails extends React.Component<
   static contextType = NavContext;
   constructor(props: TopItemDetailsProps) {
     super(props);
-
     this.state = {
       showPop: false,
       enquiry: "",
@@ -116,24 +115,24 @@ class TopItemDetails extends React.Component<
                   </IonRow>
 
                   <IonToolbar class="enquiryButtonFooter">
-                    <IonButton
-                      disabled={this.props.item.EnquiryStatus == "1"}
-                      expand="block"
-                      className={
-                        this.props.item.EnquiryStatus == "1"
-                          ? "enquiryButton1"
-                          : "enquiryButton"
-                      }
-                      onClick={() => {
-                        this.setState({ showPop: true });
-                      }}
-                    >
-                      <IonLabel>
-                        {this.props.item.EnquiryStatus == "1"
-                          ? "Enquiry Sent"
-                          : "Send Enquiry"}
-                      </IonLabel>
-                    </IonButton>
+                      <IonButton
+                        disabled={this.props.item.EnquiryStatus == "1"}
+                        expand="block"
+                        className={
+                          this.props.item.EnquiryStatus == "1"
+                            ? "enquiryButton1"
+                            : "enquiryButton"
+                        }
+                        onClick={() => {
+                          this.setState({ showPop: true });
+                        }}
+                      >
+                        <IonLabel>
+                          {this.props.item.EnquiryStatus == "1"
+                            ? "Enquiry Sent"
+                            : "Send Enquiry"}
+                        </IonLabel>
+                      </IonButton>
                   </IonToolbar>
                 </IonGrid>
 
@@ -193,26 +192,39 @@ class TopItemDetails extends React.Component<
   enquiryInput(event: any) {
     this.setState({ enquiry: event.target.value });
   }
+
+  async sendmessage(item){
+    let data = {
+      item_id:item,
+      message:this.state.enquiry,
+      loginMetadata:this.props.loginMetadata
+    }
+    const response = await fetch('https://iiaonline.in/newapi_iia/sendEnquerySMS.php',{
+      method:'POST',
+      body:JSON.stringify(data)
+    })
+
+  }
   SendEnquiry(event: any) {
     this.setState({ showLoading: true });
     BuyerService.SendEnquiry(
       this.state.enquiry,
       this.props.item.Id,
       this.props.loginMetadata
-    )
-      .then((res) => {
-        this.props.item.EnquiryStatus = "1";
-        StorageService.Set(
-          BuyerItemsList +
-            this.props.item.Category +
-            this.props.item.SubCategory,
-          this.props.item,
-          BuyerItemListExpiry
-        ).then(() => {
-          this.setState({ showLoading: false, enquirySent: true });
-        });
-      })
-      .catch((error) => this.setState({ showLoading: false, showAlert: true }));
+    ).then((res) => {
+      this.sendmessage(this.props.item.Id);
+      this.props.item.EnquiryStatus = "1";
+      StorageService.Set(
+        BuyerItemsList +
+          this.props.item.Category +
+          this.props.item.SubCategory,
+        this.props.item,
+        BuyerItemListExpiry
+      ).then(() => {
+        this.setState({ showLoading: false, enquirySent: true });
+      });
+    })
+    .catch((error) => this.setState({ showLoading: false, showAlert: true }));
   }
 }
 export default TopItemDetails;
