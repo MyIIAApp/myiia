@@ -258,6 +258,19 @@ class ItemDetails extends React.Component<ItemDetailsProps, ItemDetailsStates> {
   enquiryInput(event: any) {
     this.setState({ enquiry: event.target.value });
   }
+
+  async sendmessage(item){
+    let data = {
+      item_id:item,
+      message:this.state.enquiry,
+      loginMetadata:this.props.loginMetadata
+    }
+    const response = await fetch('https://iiaonline.in/newapi_iia/sendEnquerySMS.php',{
+      method:'POST',
+      body:JSON.stringify(data)
+    })
+  }
+
   SendEnquiry(event: any) {
     this.setState({ showLoading: true });
     BuyerService.SendEnquiry(
@@ -266,6 +279,7 @@ class ItemDetails extends React.Component<ItemDetailsProps, ItemDetailsStates> {
       this.props.loginMetadata
     )
       .then((res) => {
+        this.sendmessage(this.state.itemList.itemListing[this.state.index].Id);
         this.state.itemList.itemListing[this.state.index].EnquiryStatus = "1";
         StorageService.Set(
           BuyerItemsList +
