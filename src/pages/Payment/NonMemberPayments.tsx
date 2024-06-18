@@ -18,6 +18,7 @@ import {
   IonDatetime,
   IonToolbar,
   IonCard,
+  IonSpinner,
   IonCardContent,
   IonCardHeader,
   IonList,
@@ -89,6 +90,7 @@ interface NonMemberPaymentsStates {
   Email:string;
   pincode:string;
   sacValue:sacType[];
+  showgstinfoload:boolean;
 }
 
 class NonMemberPayments extends React.Component<
@@ -123,6 +125,7 @@ class NonMemberPayments extends React.Component<
       adminSourceGST: "",
       Email:"",
       pincode:"",
+      showgstinfoload:false,
       sacValue:[
         {id:1,value:998599},
         {id:2,value:998363}
@@ -263,6 +266,7 @@ class NonMemberPayments extends React.Component<
     });
   }
   
+ 
   componentDidMount() {
     this.getData(true);
   }
@@ -305,6 +309,33 @@ class NonMemberPayments extends React.Component<
                 </IonTitle>
               </IonSegment>
 
+              
+              <IonItem class="createinput">
+                <IonLabel
+                  position="floating"
+                  class="selectDisabled"
+                  // color={this.state.gstin == "" ? "black" : "primary"}
+                >
+                  GSTIN*
+                </IonLabel>
+                <IonInput
+                  placeholder="GST"
+                  name="gstin"
+                  value={this.state.gstin}
+                  maxlength={15}
+                  required={true}
+                  onIonChange={(e:any)=>this.getGstNo(e)}
+                  // onKeyDown={(e:any)=>this.getGstNo(e)}
+                ></IonInput>
+
+                {
+                  (this.state.showgstinfoload) ?<IonSpinner style={{position:'absolute',top:'13px',right:'10px'}} name="lines"></IonSpinner> :null
+                }
+                
+                
+              </IonItem>
+              
+
               <IonItem type="reset" class="createinput">
                 <IonLabel position="floating">Name</IonLabel>
                 <IonInput
@@ -336,25 +367,8 @@ class NonMemberPayments extends React.Component<
                 ></IonInput>
               </IonItem>
 
-              <IonItem class="createinput">
-                <IonLabel
-                  position="floating"
-                  class="selectDisabled"
-                  // color={this.state.gstin == "" ? "black" : "primary"}
-                >
-                  GSTIN*
-                </IonLabel>
-                <IonInput
-                  placeholder="GST"
-                  name="gstin"
-                  value={this.state.gstin}
-                  maxlength={15}
-                  required={true}
-                  onIonChange={(e: any) =>
-                    this.setState({ gstin: e.detail.value })
-                  }
-                ></IonInput>
-              </IonItem>
+             
+            
 
               <IonItem class="createinput">
                 <IonLabel
@@ -801,6 +815,38 @@ class NonMemberPayments extends React.Component<
     this.state.itemList.push(new NonMemberItemDetailsModel());
     this.setState({ update: this.state.update + 1 });
   };
+
+  getGstNo(event){
+    this.setState({gstin:event.target.value})
+    this.getUserInfoFromGST(event.target.value);
+  }
+
+  clearvalue(){
+    this.setState({showgstinfoload:false, gstin: '',Name:'',pincode:'',states:'',Address:''})
+  }
+
+  async getUserInfoFromGST(value){
+    if(value.length==15){
+      this.setState({showgstinfoload:true});
+    }
+    if(value.length!=15) return;
+    let data = {
+      gstin:value
+    }
+    const response = await fetch('https://iiaonline.in/newapi_iia/getUserInfoFromGstIn.php',{
+      method:'POST',
+      body:JSON.stringify(data)
+    });
+    const result = await response.json();
+    if(result.error){
+      this.clearvalue();
+      this.setState({showgstinfoload:false})
+      return;
+    }
+    let address = result.taxpayerInfo.pradr.addr;
+    let fulladdress = `${address.bnm} ${address.st} ${address.loc}`;
+    this.setState({showgstinfoload:false, gstin: value,Name:result.taxpayerInfo.lgnm,pincode:address.pncd,states:address.stcd,Address:fulladdress})
+  }
 
   handleRemoveItemList = (idx) => () => {
     this.state.itemList.splice(idx, 1);
