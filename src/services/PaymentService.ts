@@ -771,4 +771,112 @@ public static async paymentAllInvoices(loginMetadata: LoginMetadata,forceRefresh
     });
     return response;
   }
+  public static async OnlinePaymentInvoice(props,loginMetadata){
+    let cgst =  parseInt(props.cgst); 
+    let igst =  parseInt(props.igst);
+    let sgst =  parseInt(props.sgst);
+
+    let subtotal:any = parseInt(props.membershipFee); 
+    let totalAmt = parseInt(props.totalamt); 
+
+    const newbody = {
+      Version: "1.1",
+      TranDtls: {
+          TaxSch: "GST",
+          SupTyp: "B2B",
+          RegRev: "N",
+          EcmGstin: null,
+          IgstOnIntra: "N"
+      },
+      DocDtls: {
+          Typ: "INV",
+          No: "DOC/9dtrs546969",
+          Dt:  PaymentService.DateFormate()
+      },
+      BuyerDtls: {
+        Gstin: props.gstin,
+        LglNm: props.unitname,
+        TrdNm: props.unitname,
+        Pos: PaymentService.ExtractFirstTwoDigits(props.gstin),
+        Addr1: props.userdetail.address,
+        Addr2: props.userdetail.address,
+        Loc: props.userdetail.district,
+        Pin: props.userdetail.pincode,
+        Stcd: PaymentService.ExtractFirstTwoDigits(props.gstin),
+        Ph: props.phone,
+        Em: props.userdetail.email
+      },
+      SellerDtls: {
+          "Gstin": "27AAFCP0535R012",
+          "LglNm": "NIC company pvt ltd",
+          "TrdNm": "NIC Industries",
+          "Addr1": "5th block, kuvempu layout",
+          "Addr2": "kuvempu layout",
+          "Loc": "GANDHINAGAR",
+          "Pin": 400001,
+          "Stcd": "27",
+          "Ph": "9000000000",
+          "Em": "abc@gmail.com",
+          "chapterId":loginMetadata.chapterId
+      },
+      ItemList: [
+          {
+              "PrdSlNo": "12345",
+              "OrgCntry": null,
+              "OrdLineRef": null,
+              "TotItemVal": totalAmt,
+              "OthChrg": 0,
+              "StateCesNonAdvlAmt": 0,
+              "StateCesAmt": 0,
+              "StateCesRt": 0,
+              "CesNonAdvlAmt": 0,
+              "CesAmt": 0,
+              "CesRt": 0,
+              "SgstAmt": sgst,
+              "CgstAmt": cgst,
+              "IgstAmt": igst,
+              "Qty": 1,
+              "AssAmt": subtotal,
+              "PreTaxVal": 0,
+              "Discount": 0,
+              "TotAmt": subtotal,
+              "UnitPrice":subtotal,
+              "Unit": "PCS",
+              "FreeQty": 0,
+              "GstRt": 12,
+              "Barcde": null,
+              "HsnCd": "9405",
+              "IsServc": "N",
+              "PrdDesc": null,
+              "SlNo": "2"
+          }
+      ],
+      ValDtls: {
+          "AssVal": subtotal,
+          "CgstVal": cgst,
+          "SgstVal": sgst,
+          "IgstVal": igst,
+          "CesVal": 0,
+          "StCesVal": 0,
+          "RndOffAmt": 0,
+          "TotInvVal": totalAmt,
+          "TotInvValFc": 0,
+          "Discount": 0,
+          "OthChrg": 0
+      },
+      newpayload:{
+        "userdata":props,
+        "loginMetadata":loginMetadata
+      }
+  }
+    //  let url = 'http://localhost/api/zzz/newapi_iia/e_invoice_online_payment.php';
+     let url = 'https://iiaonline.in/e_invoice_online_payment.php';
+    const response = await fetch(url, {
+	    method: "POST", 
+	    body: JSON.stringify(newbody),
+	  }).then(res=>{
+      return res.json();
+    });
+    return response;
+  }
 }

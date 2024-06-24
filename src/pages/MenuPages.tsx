@@ -40,7 +40,8 @@ import {
   ManageMagazinePage,
   IIADirectoryPage,
   MangaMartADs,
-  ManageMartCartegoryADs
+  ManageMartCartegoryADs,
+  OnlineUserPayments
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import Chapter from "./Chapter";
@@ -78,6 +79,9 @@ import Magazines from "./Magazine/Magazines";
 import MagazineCreate from "./Magazine/MagazineCreate";
 import AdminManageMagazine from "./Magazine/AdminManageMagazine";
 import IIADirectory from "./IIADirectory/IIADirectory";
+
+import OnlineUserPayment from "./Payment/OnlineUserPayment";
+
 interface MMenuPagesStates {
   memberShipProfile: MembershipProfileModel;
   membershipStatus: number;
@@ -211,6 +215,16 @@ class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
       );
     }
 
+    if (this.props.match.params.page === OnlineUserPayments.Page) {
+      return (
+        <OnlineUserPayment
+        loginMetadata={this.props.loginMetadata}
+        changePage={(value: string) => this.props.changePage(value)}
+        />
+      );
+    }
+
+
     if (this.props.match.params.page === ManageMartCartegoryADs.Page) {
       return (
         <ManageCategoryAds
@@ -219,7 +233,6 @@ class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
         />
       );
     }
-
 
     if (this.props.match.params.page === PaymentHistoryPage.Page) {
       return (

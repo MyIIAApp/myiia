@@ -51,7 +51,8 @@ import {
   ManageMagazinePage,
   IIADirectoryPage,
   MangaMartADs,
-  ManageMartCartegoryADs
+  ManageMartCartegoryADs,
+  OnlineUserPayments
 } from "../constants/MenuConstants";
 import { LoginMetadata } from "../models/LoginMetadata";
 import { UserProfileModel } from "../models/UserProfileModel";
@@ -227,13 +228,19 @@ class Menu extends React.Component<MenuProps, MenuStates> {
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(MangaMartADs, 19)
           : undefined}
+
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(ManageMartCartegoryADs, 20)
           : undefined}
 
+       
+
+
         {this.getMenuItem(CreateUpadateMembershipPage, 8)}
         {this.getMenuItem(RecordPaymentPage, 9)}
-        
+        {this.props.loginMetadata.chapterId == 82
+          ? this.getMenuItem(OnlineUserPayments, 21)
+          : undefined}
         {this.getMenuItem(PaymentHistoryPageForAdmin, 10)}
         {this.getMenuItem(AdminPaymentByMember, 11)}
         {this.getMenuItem(CreateNewMembership, 12)}
@@ -252,6 +259,7 @@ class Menu extends React.Component<MenuProps, MenuStates> {
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(MagazineCreationPage, 16) 
           : undefined}
+
         {this.props.loginMetadata.chapterId == 82
           ? this.getMenuItem(ManageMagazinePage, 17) 
           : undefined}

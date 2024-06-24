@@ -272,3 +272,9 @@ export const ManageMartCartegoryADs: AppPage = {
   IosIcon: folderOpenOutline,
   MdIcon: folderOpenOutline
 }
+
+export const OnlineUserPayments: AppPage = {
+  Page: "Online User Payment",
+  IosIcon: folderOpenOutline,
+  MdIcon: folderOpenOutline
+}
