@@ -291,7 +291,7 @@ class TicketsDetails extends React.Component<
               </IonListHeader>
               <IonList>
                 {this.state.ticket.Attachment.length != 0 ? (
-                  this.state.ticket.Attachment.map((a: Attachments) => {
+                  this.state.ticket.Attachment.map((a: any) => {
                     return (
                       <IonItem lines="full" key={a.AttachmentCreationTime}>
                         <IonLabel>
@@ -301,7 +301,7 @@ class TicketsDetails extends React.Component<
                         </IonLabel>
                         <IonButton
                           slot="end"
-                          onClick={() => window.open(a.AttachmentURL)}
+                          onClick={() => window.open(a.AttachmentAcutal)}
                         >
                           DOWNLOAD
                         </IonButton>
