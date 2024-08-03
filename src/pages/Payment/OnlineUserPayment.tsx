@@ -151,7 +151,7 @@ import {
                                                             <p><span>Name - </span> {item.userdetail.firstName} {item.userdetail.lastName}</p>
                                                             <p><span>Chapter Name - </span> {item.userdetail.chapterName}</p>
                                                             <p><span>Total Amount - </span> {item.totalamt}</p>
-                                                            <p><span>Created datetime - </span> {item.createdate}</p>
+                                                          <p><span>Created datetime - </span> {item.createdate}</p>
                                                         <div className="actionbtn">
                                                             <div>
                                                                 <IonButton
