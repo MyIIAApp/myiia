@@ -1,0 +1,58 @@
+.myiiacoldeails {
+    padding-left: 7%;
+  }
+  .OrcardContent{
+    color: black;
+    border-radius: 11px;
+  }
+  .OrcardContent .Orcardcon{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+  }
+  .OrcardContent img{
+    width: 100%;
+    height: 110px;
+  }
+  .OrcardContent p{
+    margin: 0;
+    line-height: 14px;
+    color: black;
+  }
+  .oricardcontainer ion-card-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #2b2828;
+  }
+  .oricardcontainer ion-card{
+    box-shadow: 4px 4px 10px rgb(0 0 0 / 25%);
+  }
+  
+  .submenu {
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .submenu.show {
+    opacity: 1;
+    max-height: 500px; /* Adjust based on your content size */
+  }
+  
+  .submenu.hide {
+    opacity: 0;
+    max-height: 0;
+  }
+  .arrowIconlogo{
+    width: 12px;
+    transition: opacity 1s ease, max-height 2s ease;
+  }
+  .arrow90{
+    transform: rotate(90deg);
+  }
+  .arrow0{
+    transform: unset;
+  }

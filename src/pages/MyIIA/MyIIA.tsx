@@ -9,11 +9,15 @@ import {
   IonSegment,
   IonSlide,
   IonSlides,
-  IonTabBar,
+  IonIcon,
+  IonCardContent,
+  IonLabel,
+  IonBadge,
   IonTabButton,
+  IonCard,
   IonTabs,
 } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import { StorageService } from "../../services/StorageService";
 import React from "react";
 import { Redirect, Route } from "react-router";
 import HeaderToolbar from "../../components/HeaderToolbar";
@@ -24,7 +28,9 @@ import { Leader } from "../../models/MyIIA/Leader";
 import { MyIIAService } from "../../services/MyIIAService";
 import "../../styles/MyIIA.css";
 import MyIIALeaders from "./MyIIALeaders";
-
+import OrganizationCard from './OrganizationalCard';
+import { arrowDown ,arrowUpSharp,arrowForward} from "ionicons/icons";
+import './style.css';
 const slideOpts = {
   autoplay: true,
   loop: true,
@@ -37,6 +43,15 @@ interface MyIIAStates {
   showloading: boolean;
   hoLeaders: Leader[];
   chapterLeaders: Leader[];
+  arrdata:any[];
+  tempArrdata:any[];
+  showsection1:boolean;
+  showsection2:boolean;
+  activeIndex:number;
+  titledata:string;
+  counter:number;
+  foodData:any[];
+  TotalAmnt:number;
 }
 interface MyIIAProps {
   loginMetadata: LoginMetadata;
@@ -47,29 +62,72 @@ class MyIIA extends React.Component<MyIIAProps, MyIIAStates> {
   constructor(props: MyIIAProps) {
     super(props);
     this.state = {
+      activeIndex:0,
       sliderlist: [],
       showloading: true,
       hoLeaders: [],
       chapterLeaders: [],
+      arrdata:[],
+      showsection1:true,
+      showsection2:false,
+      tempArrdata:[],
+      titledata:"",
+      counter:0,
+      TotalAmnt:0,
+      foodData:[
+        {id:1,title:'IIA',qty:0},
+        {id:2,title:'Document',qty:0},
+        {id:3,title:'Photo',qty:0},
+        {id:4,title:'Image',qty:0},
+      ],
     };
   }
-  componentDidMount() {
-    let getSliderimagesPromise = MyIIAService.getSliderimages(
-      this.props.loginMetadata
-    );
-    let getLeadersPromise = MyIIAService.getLeaders(this.props.loginMetadata);
-    Promise.all([getSliderimagesPromise, getLeadersPromise])
+
+  componentDidMount(){
+    Promise.all([this.getBanner(), this.getDataList()])
       .then((result: any[]) => {
         this.setState({
           sliderlist: result[0],
-          hoLeaders: result[1].ho,
-          chapterLeaders: result[1].chapter,
-          showloading: false,
+          showloading:false,
+          arrdata:result[1],
         });
       })
-      .catch(() => {});
+    .catch(() => {});
+
   }
 
+ 
+  async getDataList(){
+    const response  = await fetch('https://iiaonline.in/newapi_iia/getOrganizationdata.php');
+    const result = await response.json();
+    return result;
+  }
+
+  async getBanner(){
+    const response  = await fetch('https://iiaonline.in/newapi_iia/getOrgainzationBanner.php');
+    const result = await response.json();
+    return result;
+  }
+
+  handleToggle(index,item){
+      
+        this.openshowList();
+        this.setState({titledata:item.option})
+      
+      if(this.state.arrdata[index].activeMenu){
+        this.state.arrdata[index].activeMenu=false;
+      } else{
+        this.state.arrdata[index].activeMenu=true;
+      }
+      this.setState({arrdata:this.state.arrdata})
+  }
+
+  subdetailoption(index,item){
+    this.setState({titledata:item.suboption})
+    this.openshowList();
+  }
+
+  
   render() {
     if (this.state.showloading) {
       return (
@@ -83,19 +141,18 @@ class MyIIA extends React.Component<MyIIAProps, MyIIAStates> {
           <Loading />
         </IonPage>
       );
-    }
-    return (
-      <IonPage>
-        <HeaderToolbar
-          refreshPage={() => {}}
-          previousPage={() => {}}
-          showBackButton={false}
-          showRefreshButton={false}
-        />
-        <IonReactRouter>
-          <IonContent>
-            <IonGrid className="limitContent">
-              <IonSegment mode ="md" className="myiiaImgseg">
+    }else if(this.state.showsection1){
+      return (
+        <IonPage>
+          <HeaderToolbar
+            refreshPage={() => {}}
+            previousPage={() => {}}
+            showBackButton={false}
+            showRefreshButton={false}
+          />
+          <IonContent className="oricardcontainer">
+
+            <IonSegment mode ="md" className="myiiaImgseg">
                 <IonSlides
                   className="myiiaSlider"
                   options={slideOpts}
@@ -103,12 +160,11 @@ class MyIIA extends React.Component<MyIIAProps, MyIIAStates> {
                 >
                   {this.state.sliderlist.map((item: any) => {
                     return (
-                      <IonSlide key={item.name}>
+                      <IonSlide key={item.id}>
                         <IonImg
                           className="myiiaImage"
                           src={
-                            "https://iiaprodstorage.blob.core.windows.net/sliderimages/" +
-                            item.name
+                            item.image
                           }
                         />
                       </IonSlide>
@@ -117,77 +173,63 @@ class MyIIA extends React.Component<MyIIAProps, MyIIAStates> {
                 </IonSlides>
               </IonSegment>
 
-              <Redirect to={"/" + LocalContactPage.Page + "/HOLeaders"} />
-              <IonTabs className="myiiatab">
-                <IonRouterOutlet>
-                  <Route
-                    path={"/" + LocalContactPage.Page + "/HOLeaders"}
-                    exact={true}
-                  >
-                    <IonContent>
-                      <IonList>
-                        {this.state.hoLeaders.map(
-                          (hoLeadersitem: any, index: number) => {
-                            return (
-                              <IonItem key={index} lines="none">
-                                <MyIIALeaders
-                                  leaders={hoLeadersitem}
-                                  loginMetadata={this.props.loginMetadata}
-                                />
-                              </IonItem>
-                            );
-                          }
-                        )}
-                      </IonList>
-                    </IonContent>
-                  </Route>
+            {
+              this.state.arrdata.map((item,index)=>{
+                return (
+                  <>
+                    <IonCard>
+                      <IonCardContent onClick={() => this.handleToggle(index,item)}>
+                          <IonLabel class="statuslabel">{item.option}</IonLabel>
 
-                  <Route
-                    path={"/" + LocalContactPage.Page + "/ChapterLeaders"}
-                    exact={true}
-                  >
-                    <IonContent>
-                      <IonList>
-                        {this.state.chapterLeaders.map(
-                          (chapterLeadersitem: any, index: number) => {
-                            return (
-                              <IonItem key={index} lines="none">
-                                <MyIIALeaders
-                                  leaders={chapterLeadersitem}
-                                  loginMetadata={this.props.loginMetadata}
-                                />
-                              </IonItem>
-                            );
-                          }
-                        )}
-                      </IonList>
-                    </IonContent>
-                  </Route>
-                </IonRouterOutlet>
-                <IonTabBar className="myiiatabbar" slot="top">
-                  <IonTabButton
-                    className="myiiabttn"
-                    tab="hoLeaders"
-                    href={"/" + LocalContactPage.Page + "/HOLeaders"}
-                  >
-                    Central Office Bearers
-                  </IonTabButton>
-                  {this.state.chapterLeaders.length != 0 ? (
-                    <IonTabButton
-                      className="myiiabttn"
-                      tab="chapterLeaders"
-                      href={"/" + LocalContactPage.Page + "/ChapterLeaders"}
-                    >
-                      Chapter leaders
-                    </IonTabButton>
-                  ) : null}
-                </IonTabBar>
-              </IonTabs>
-            </IonGrid>
+                          <img  
+                          src="https://iiaonline.in/app_icon/right-arrow.png" 
+                          className={`arrowIconlogo arrow0}`} 
+                          />
+                          {/* <IonIcon size="small" ios={ (item.subMenu.length>0) ? arrowDown: arrowForward}></IonIcon> */}
+                      </IonCardContent>
+                    </IonCard>
+                    {
+                      // (item.subMenu.length>0) ? <div className={`submenu ${!item.activeMenu ? 'hide' : 'show'}`}>
+                      //   {
+                      //     item.subMenu.map((item,index)=>{
+                      //       return (
+                      //           <IonCard style={{width:'80%',marginLeft:'auto'}}  onClick={() => this.subdetailoption(index,item)}>
+                      //             <IonCardContent style={{padding:'6px'}}>
+                      //                 <IonLabel class="statuslabel">{item.suboption}</IonLabel>
+                      //                 {/* <IonIcon size="small" ios={arrowForward}></IonIcon> */}
+                      //                 <img src="https://iiaonline.in/app_icon/right-arrow.png" alt="" className="arrowIconlogo" />
+                      //             </IonCardContent>
+                      //           </IonCard>
+                      //       );
+                      //     })
+                      //   }
+                      // </div> : null
+                    }
+                  </>
+                );
+              })
+            }
           </IonContent>
-        </IonReactRouter>
-      </IonPage>
-    );
+        </IonPage>
+      );
+    }
+    else if(this.state.showsection2){
+      return (
+        <OrganizationCard
+        loginMetadata={this.props.loginMetadata}
+        goBack={()=>this.showList()}
+        titledata={this.state.titledata}
+      />
+      );
+    }
+  }
+
+  showList(){
+    this.setState({showsection2:false,showsection1:true})
+  }
+
+  openshowList(){
+    this.setState({showsection2:true,showsection1:false})
   }
 }
 
