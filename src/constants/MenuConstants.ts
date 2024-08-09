@@ -149,7 +149,7 @@ export const HelpdeskDashboardPage: AppPage = {
 };*/
 
 export const LocalContactPage: AppPage = {
-  Page: "MyIIA",
+  Page: "Organisation Structure",
   IosIcon:  peopleOutline,
   MdIcon: peopleOutline,
 };
