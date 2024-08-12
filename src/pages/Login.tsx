@@ -153,6 +153,9 @@ class Login extends React.Component<LoginProps, LoginStates> {
             Send OTP
           </IonButton>
         </IonSegment>
+         <IonSegment mode ="md" className="colorSeg">
+           <a href="http://divisional.iiaonline.in/" style={{marginTop:'27px',color:'#3880ff'}}>IIA Divisional Login</a>
+        </IonSegment>
         <IonToast
           isOpen={this.state.showState}
           message="OTP Sent"
