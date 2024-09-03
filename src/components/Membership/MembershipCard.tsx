@@ -22,6 +22,7 @@ import { MembershipProfileModel } from "../../models/Membership/MembershipProfil
 interface MembershipCardProps {
   membershipModel: ActiveMembershipModel;
   membershipProfile: MembershipProfileModel;
+  renewalDate?:string;
 }
 
 class MembershipCard extends React.Component<MembershipCardProps> {
@@ -29,6 +30,13 @@ class MembershipCard extends React.Component<MembershipCardProps> {
     super(props);
     this.state = {};
   }
+  changeDateFormate(oldFromate){
+    if(!oldFromate) return "";
+    let [year,mon,day] = oldFromate.split('-');
+    return `${day}-${mon}-${year}`;
+  }
+
+
   render() {
     return (
       <IonCard class="membershipCard">
@@ -133,7 +141,9 @@ class MembershipCard extends React.Component<MembershipCardProps> {
               <IonCol>
                 <IonSegment mode ="md">
                   <IonCardTitle  class="membershipCardTitle">
-                    {this.props.membershipModel.membershipSince}
+                    {
+                       this.changeDateFormate(this.props.membershipModel.membershipSince)
+                    }
                   </IonCardTitle>
                 </IonSegment>
                 <IonSegment mode ="md">
@@ -142,10 +152,10 @@ class MembershipCard extends React.Component<MembershipCardProps> {
                   </IonCardSubtitle>
                 </IonSegment>
               </IonCol>
-{/*               <IonCol>
+              <IonCol>
                 <IonSegment mode ="md">
                   <IonCardTitle  class="membershipCardTitle">
-                    {this.props.membershipModel.membershipExpiryDate}
+                    {this.props.renewalDate}
                   </IonCardTitle>
                 </IonSegment>
                 <IonSegment mode ="md">
@@ -153,7 +163,7 @@ class MembershipCard extends React.Component<MembershipCardProps> {
                     <strong>Renewal Due Date</strong>
                   </IonCardSubtitle>
                 </IonSegment>
-              </IonCol> */}
+              </IonCol>
             </IonRow>
           </IonGrid>
         </IonCardContent>
