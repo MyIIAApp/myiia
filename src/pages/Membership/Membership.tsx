@@ -52,6 +52,8 @@ interface MembershipStates {
   showPayment: boolean;
   showUpdate: boolean;
   gst: string;
+  renewalDate:string;
+  originalFormate:string;
 }
 
 interface MembershipProps {
@@ -77,8 +79,24 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
       showPayment: false,
       showUpdate: false,
       gst: "",
+      renewalDate:"",
+      originalFormate:""
     };
   }
+
+  
+async getRenwabledate(loginMetadata){
+  const data = {
+    loginMetadata:loginMetadata,
+  }
+  const response = await fetch('https://iiaonline.in/newapi_iia/getMembershipInfo.php',{
+    method:'POST',
+    body:JSON.stringify(data)
+  })
+  const result = await response.json();
+  return result;
+}
+
 
   componentDidMount() {
     this.getData(false);
@@ -95,7 +113,8 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
       forceRefresh,
       {}
     );
-    Promise.all([getActiverMembershipPromise, getMembershipProfilePromise])
+    let rennewaledate =  this.getRenwabledate(this.props.loginMetadata);
+    Promise.all([getActiverMembershipPromise, getMembershipProfilePromise,rennewaledate])
       .then((result: any[]) => {
         this.setState({
           membershipModel: result[0],
@@ -104,6 +123,8 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
           showProgress: false,
           showPayment: false,
           profileImagePath: result[1][0].profileImagePath,
+          renewalDate:result[2].expirydate,
+          originalFormate:result[2].actualdate
         });
         this.props.loginMetadata.membershipStatus = result[1][0].profileStatus;
         this.props.setLoginStateFunction(this.props.loginMetadata);
@@ -122,7 +143,7 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
       return (
         <PaymentForm
           loginMetadata={this.props.loginMetadata}
-          expiryYear={this.state.membershipModel.membershipExpiryDate}
+          expiryYear={this.state.originalFormate}
           resetMembershipData={(forceRefresh: boolean) => {
             this.getData(forceRefresh);
           }}
@@ -281,6 +302,7 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
                 <MembershipCard
                   membershipModel={this.state.membershipModel}
                   membershipProfile={this.state.membershipProfile}
+                  renewalDate={this.state.renewalDate}
                 />
               </IonSegment>
               <IonSegment mode ="md">
@@ -344,16 +366,16 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
               ) : null}
               {this.state.membershipStatus >=
                 MembershipProfileStatus.ActiveMembership && (new Date().getMonth() > 2 && new Date().getFullYear() >= parseInt(
-                        this.state.membershipModel.membershipExpiryDate.slice(0, 4)
+                        this.state.renewalDate.slice(6, 10)
                       ) || new Date().getMonth() < 3 && new Date().getFullYear() > parseInt(
-                        this.state.membershipModel.membershipExpiryDate.slice(0, 4)
+                        this.state.renewalDate.slice(6, 10)
                       ))
               // (this.state.membershipStatus ==
               //   MembershipProfileStatus.ActiveMembership &&
               //   new Date().getMonth() < 3 &&
               //   new Date().getFullYear() ==
               //     parseInt(
-              //       this.state.membershipModel.membershipExpiryDate.slice(0, 4)
+              //       this.state.renewalDate.slice(6, 10)
               //     )) 
               ? (
                 <IonSegment mode ="md">
@@ -362,15 +384,15 @@ class Membership extends React.Component<MembershipProps, MembershipStates> {
                     onClick={() => this.pay()}
                   >
                     pay{" "}
-                    {this.state.membershipModel.membershipExpiryDate.slice(
-                      0,
-                      4
+                    {this.state.renewalDate.slice(
+                      6,
+                      10
                     )}
                     -
                     {parseInt(
-                      this.state.membershipModel.membershipExpiryDate.slice(
-                        0,
-                        4
+                      this.state.renewalDate.slice(
+                        6,
+                        10
                       )
                     ) + 1}
                   </IonButton>
