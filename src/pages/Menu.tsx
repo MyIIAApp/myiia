@@ -56,7 +56,7 @@ import { LoginMetadata } from "../models/LoginMetadata";
 import { UserProfileModel } from "../models/UserProfileModel";
 import { MembershipService } from "../services/MembershipService";
 import "../styles/Menu.css";
-
+import { peopleOutline } from "ionicons/icons";
 interface MenuStates {
   membershipProfile: UserProfileModel;
 }
@@ -66,6 +66,17 @@ interface MenuProps {
   changePage: (value: string) => void;
   page: string;
   setLoginStateFunction: (loginMetadata: LoginMetadata | null) => void;
+}
+interface AppPage1 {
+  Page: string;
+  IosIcon: string;
+  MdIcon: string;
+}
+
+const IIADivisonal:AppPage1 = {
+  Page: "IIA Divisional Chairman Login",
+  IosIcon:  peopleOutline,
+  MdIcon: peopleOutline,
 }
 
 class Menu extends React.Component<MenuProps, MenuStates> {
@@ -203,6 +214,7 @@ class Menu extends React.Component<MenuProps, MenuStates> {
         {this.getMenuItem(PaymentHistoryPage, 10)}
         {this.getMenuItem(MagazinePage, 11)}
         {this.getMenuItem(IIADirectoryPage, 12)}
+        {this.getMenuItem(IIADivisonal, 14)}
         {this.getMenuItem(ContactPage, 13)}
       </div>
     );

@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import ComingSoon from "../components/ComingSoon";
 import DisplayMessage from "../components/Membership/DisplayMessage";
 import MembershipBenifits from "../components/Membership/MembershipBenifits";
+import { peopleOutline } from "ionicons/icons";
 import {
   ApproveMembershipPage,
   B2BPage,
@@ -74,6 +75,9 @@ import Magazines from "./Magazine/Magazines";
 import MagazineCreate from "./Magazine/MagazineCreate";
 import AdminManageMagazine from "./Magazine/AdminManageMagazine";
 import IIADirectory from "./IIADirectory/IIADirectory"
+
+import IIADivisonalLogin from "../pages/IIADivisonalLogin";
+
 interface MMenuPagesStates {
   memberShipProfile: MembershipProfileModel;
   membershipStatus: number;
@@ -88,6 +92,17 @@ interface MenuPagesProps
   setLoginStateFunction: (loginMetadata: LoginMetadata | null) => void;
 }
 
+interface AppPage {
+  Page: string;
+  IosIcon: string;
+  MdIcon: string;
+}
+
+const IIADivisonal:AppPage = {
+  Page: "IIA Divisional Chairman Login",
+  IosIcon:  peopleOutline,
+  MdIcon: peopleOutline,
+}
 class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
   constructor(props: MenuPagesProps) {
     super(props);
@@ -365,6 +380,12 @@ class MenuPages extends React.Component<MenuPagesProps, MMenuPagesStates> {
     if (this.props.match.params.page === IIADirectoryPage.Page) {
       return <IIADirectory loginMetadata={this.props.loginMetadata} />;
     }
+
+    
+  if (this.props.match.params.page === IIADivisonal.Page) {
+    return <IIADivisonalLogin />;
+  }
+
 
     if (this.props.match.params.page === MembershipBenefitPage.Page) {
       return <MembershipBenifits />;
