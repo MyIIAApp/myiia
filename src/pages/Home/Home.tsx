@@ -239,7 +239,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
                   </IonSegment>
                   <IonSegment mode ="md" className="thanksmsgGuest segMargin">
                     We are over{" "}
-                    <strong className="hothnksmsg">&nbsp; 12000 &nbsp;</strong>{" "}
+                    <strong className="hothnksmsg">&nbsp; 13500 &nbsp;</strong>{" "}
                     members
                   </IonSegment>
                   <IonSegment mode ="md" className="thanksmsgGuest">
