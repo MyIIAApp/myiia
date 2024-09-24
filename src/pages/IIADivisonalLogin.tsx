@@ -6,7 +6,7 @@ import { Browser } from "@capacitor/browser";
 const IIADivisonalLogin: React.FC = () => {
 
     useEffect(()=>{
-        Browser.open({url:"http://divisional.iiaonline.in/"});
+        Browser.open({url:"https://divisional.iiaonline.in/"});
       },[])
       
   return (
