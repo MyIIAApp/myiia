@@ -44,6 +44,9 @@ interface RecordPaymentStates {
   paymentReason2: string;
   notMember: boolean;
   customerPrice:number;
+  changeYearLoading:boolean;
+  tempFees:any;
+  tempPaymentValue:any;
 }
 interface GSTBLANK {
   status:boolean;
@@ -84,7 +87,10 @@ class RecordPayment extends React.Component<
       subTotal: "",
       paymentReason2: "",
       notMember: false,
-      customerPrice:0
+      customerPrice:0,
+      changeYearLoading:false,
+      tempFees:'',
+      tempPaymentValue:''
     };
   }
   async updateGSTtoBLANK():Promise<GSTBLANK>{
@@ -106,10 +112,10 @@ class RecordPayment extends React.Component<
 
   async paymentDetailsNewPrice(userdetails:any):Promise<any>{
     const data = {
-      ...userdetails
+      ...userdetails,
+      ...this.state.contain
     }
-    //https://iiaonline.in/newapi_iia/getPaymentdetail.php
-    const response = await fetch('https://iiaonline.in/newapi_iia/getPaymentdetail.php',{
+    const response = await fetch('https://iiaonline.in/newapi_iia/getPaymentdetail_testig.php',{
       method:"POST",
       body:JSON.stringify(data)
     })
@@ -118,11 +124,36 @@ class RecordPayment extends React.Component<
     })
     return response;
   }
+
+  async getAmtOnYears(){
+    try{
+      let response = await this.paymentDetailsNewPrice(this.props.userDetails);
+      this.setState({
+        dashboardObject: response,
+        changeYearLoading:false,
+        tempPaymentValue:response
+      })
+    }
+    catch(err){
+      this.setState({
+        changeYearLoading:false,
+      })
+    }
+  }
+
   async getCurrentTime(){
     const response = await fetch('https://iiaonline.in/newapi_iia/getCustomeAmt.php');
     const result = await response.json();
     this.setState({ customerPrice: result });
   }
+
+  updatePaymentType(e){
+    this.setState({ paymentType: e.detail.value });
+    if(e.detail.value == "Default"){
+      this.setState({dashboardObject:this.state.tempPaymentValue})
+    }
+  }
+
 
   componentDidMount() {
     this.getCurrentTime();
@@ -154,6 +185,7 @@ class RecordPayment extends React.Component<
                 dashboardObject: result[0],
                 year: result[1],
                 showloading: false,
+                tempPaymentValue:result[0],
               });
               this.setState({ contain: this.state.year[0] });
             }
@@ -265,7 +297,7 @@ class RecordPayment extends React.Component<
                       value={this.state.paymentType}
                       placeholder="Payment Type"
                       onIonChange={(e) =>
-                        this.setState({ paymentType: e.detail.value })
+                        this.updatePaymentType(e)
                       }
                     >
                       <IonSelectOption value="Default" defaultChecked>
@@ -365,9 +397,7 @@ class RecordPayment extends React.Component<
                         value={this.state.subTotal}
                         required={true}
                         onIonChange={(e) => {
-                          this.setState({
-                            subTotal: e.detail.value ? e.detail.value : "",
-                          });
+                          this.updateAmtIndash(e)
                         }}
                       ></IonInput>
                     </IonItem>
@@ -585,9 +615,7 @@ class RecordPayment extends React.Component<
                     value={this.state.subTotal}
                     required={true}
                     onIonChange={(e) => {
-                      this.setState({
-                        subTotal: e.detail.value ? e.detail.value : "",
-                      });
+                      this.updateAmtIndash(e)
                     }}
                   ></IonInput>
                 </IonItem>
@@ -814,8 +842,8 @@ class RecordPayment extends React.Component<
   public onendDateChange(event: any) {
     this.setState({ chequeDate: event.target.value });
   }
+
   onChecknumberInput(event: any) {
-    // console.log(event.target.value);
     this.setState({ checkNumber: event.target.value });
   }
   onAmountInput(event: any) {
@@ -823,8 +851,50 @@ class RecordPayment extends React.Component<
   }
 
   onCategoryChange(event: any) {
-    this.setState({ contain: event.target.value });
+    this.setState({ contain: event.target.value,changeYearLoading:true});
+    this.getAmtOnYears();
   }
+
+  updateAmtIndash(e){
+    let admissionFee = "0";
+    let igst = "0";
+    let sgst = "0";
+    let cgst = "0";
+    let membershipFee ="0"
+
+      this.setState({
+        subTotal: e.detail.value ? e.detail.value : "",
+      });
+      console.log(e.detail.value);
+      if(this.state.paymentType == 'Custom'){
+        let igst2 = this.roundFloatCalc(
+          (
+            (parseFloat(this.state.subTotal) * 18) /
+            100
+          ).toString()
+        )
+        let sgst2 =  this.roundFloatCalc(((parseFloat(this.state.subTotal) * 9) / 100).toString())
+
+        let cgst2 = (this.roundFloatCalc(((parseFloat(this.state.subTotal) * 9) / 100).toString()))
+
+        let membershipFee2 = this.roundFloatCalc(this.state.subTotal) -
+            (this.roundFloatCalc(
+              this.state.dashboardObject.admissionFee
+            ) > 0
+              ?  this.state.customerPrice
+              : 0)
+        admissionFee = "0";
+        igst = igst2.toString();
+        sgst = sgst2.toString();
+        cgst = cgst2.toString();
+        membershipFee = membershipFee2.toString();
+        this.setState(
+          { dashboardObject: { igst, sgst, cgst, membershipFee, admissionFee } }
+        );
+      }
+      
+  }
+
   roundFloatDisp(val: string) {
     return parseFloat(val).toFixed(2);
   }
