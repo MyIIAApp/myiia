@@ -40,6 +40,9 @@ interface MembershipProfileAStates {
   address1:string;
   industryStatus: string;
   disabled: boolean;
+  membershipId:string;
+  memExpirydate:string;
+  memJoiningdate:string;
 }
 class MembershipProfileA extends React.Component<
   MembershipProfileAProps,
@@ -70,11 +73,25 @@ class MembershipProfileA extends React.Component<
       address: this.props.membershipProfile.address,
       address1: this.props.membershipProfile.address,
       industryStatus: this.props.membershipProfile.industryStatus,
+      membershipId:"",
+      memExpirydate:"",
+      memJoiningdate:""
     };
-   
   }
+  
+  async getExpiryAndJoinDate(id){
+    const response = await fetch(`https://iiaonline.in/newapi_iia/getExpiryJoiningDate.php?id=${id}`);
+    const result = await response.json();
+    this.setState({
+      membershipId:result.MembershipId,
+      memExpirydate:result.expirydate,
+      memJoiningdate:result.MembershipJoinDate
+    })
+  }
+
   componentDidMount(){
     this.setState({GstResponse: true})
+    this.getExpiryAndJoinDate(this.props.membershipProfile.id)
   }
   render() {
     return (
@@ -106,6 +123,7 @@ class MembershipProfileA extends React.Component<
               onIonChange={(e: any) => this.handleInputChange(e)}
             ></IonInput>
           </IonItem>
+
           <IonItem
             class="basicInput membershipProfileInput"
           >
@@ -133,6 +151,58 @@ class MembershipProfileA extends React.Component<
               }}
             ></IonInput>
           </IonItem>
+            
+          <IonItem
+            class="basicInput membershipProfileInput"
+          >
+            <IonLabel
+              position="floating"
+              class="selectDisabled"
+              color="danger"
+            >
+              Membership Id
+            </IonLabel>
+            <IonInput
+              placeholder="MemberShip Id"
+              readonly={true}
+              value={this.state.membershipId}
+            ></IonInput>
+          </IonItem>
+            
+          <IonItem
+            class="basicInput membershipProfileInput"
+          >
+            <IonLabel
+              position="floating"
+              class="selectDisabled"
+              color="danger"
+            >
+              Joining date
+            </IonLabel>
+            <IonInput
+              placeholder="Joining date"
+              readonly={true}
+              value={this.state.memJoiningdate}
+            ></IonInput>
+          </IonItem>
+
+          <IonItem
+            class="basicInput membershipProfileInput"
+          >
+            <IonLabel
+              position="floating"
+              class="selectDisabled"
+              color="danger"
+            >
+              Expiry date
+            </IonLabel>
+            <IonInput
+              placeholder="Expiry date"
+              readonly={true}
+              value={this.state.memExpirydate}
+            ></IonInput>
+          </IonItem>
+
           <IonText color="dark">
             <h6>Unit Address</h6>
           </IonText>
