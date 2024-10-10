@@ -262,7 +262,7 @@ async getRenwabledate(loginMetadata){
                   class="basicButton viewBenefitsButton"
                   onClick={() => this.pay()}
                 >
-                  pay {now.getMonth() < 3 ? (now.getFullYear()-1)+ "-" + now.getFullYear():(now.getFullYear())+ "-" + (now.getFullYear()+1)}
+                  Pay membership fee{now.getMonth() < 3 ? (now.getFullYear()-1)+ "-" + now.getFullYear():(now.getFullYear())+ "-" + (now.getFullYear()+1)}
                 </IonButton>
               </IonSegment>
           </IonContent>
@@ -383,7 +383,7 @@ async getRenwabledate(loginMetadata){
                     class="basicButton viewBenefitsButton"
                     onClick={() => this.pay()}
                   >
-                    pay{" "}
+                    Pay membership fee{" "}
                     {this.state.renewalDate.slice(
                       6,
                       10
