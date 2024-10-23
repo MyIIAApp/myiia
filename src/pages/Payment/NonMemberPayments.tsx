@@ -215,7 +215,7 @@ class NonMemberPayments extends React.Component<
               PaymentService.Updatenonmember(this.state.PhoneNumber,this.state.gstin,this.state.Name,invoiceId).then(res=>{
               })
               this.downloadPdfForNonMember(payload1,data);
-              Browser.open({ url: resp.message });
+              //Browser.open({ url: resp.message });
             }
           })
           .catch(() => {
